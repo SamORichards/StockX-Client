@@ -7,7 +7,27 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="173*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Assets/Logo.png" VerticalAlignment="Center" HorizontalAlignment="Left" Height="194" Margin="52,21,0,0" Width="1250"/>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Height="410" Width="580">
+            <TextBox Background="LightGray" Foreground="White"  FontSize="30" PlaceholderText="Example@YourDomain.com" Name="EmailBox">
+                <TextBox.Header>
+                    <TextBlock Foreground="White" Text="Email" FontSize="45"></TextBlock>
+                </TextBox.Header>
+            </TextBox>
+            <PasswordBox Background="LightGray" Foreground="White" FontSize="30" PlaceholderText="********" Name="PasswordBox">
+                <PasswordBox.Header>
+                    <TextBlock Foreground="White" Text="Password" FontSize="45"></TextBlock>
+                </PasswordBox.Header>
+            </PasswordBox>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="Login" Background="Red" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="250" Height="88" Click="LoginButtonClick" ></Button>
+                <Button Content="Register" Background="Red" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="250" Height="88" ></Button>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>
