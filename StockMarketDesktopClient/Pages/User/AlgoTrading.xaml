@@ -1,8 +1,8 @@
 ﻿<Page
-    x:Class="StockMarketDesktopClient.Pages.FeaturedStock"
+    x:Class="StockMarketDesktopClient.Pages.User.AlgoTrading"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:StockMarketDesktopClient.Pages"
+    xmlns:local="using:StockMarketDesktopClient.Pages.User"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -14,7 +14,7 @@
                     <Button x:Name="HamburgerButton" HorizontalAlignment="Left" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Background="{x:Null}" Click="HamburgerButton_Click"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Background="{x:Null}" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="PortfolioMenuClicked"></Button>
-                        <Button Content="Portfolio"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="PortfolioMenuClicked"></Button>                       
+                        <Button Content="Portfolio"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="PortfolioMenuClicked"></Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Padding="0, 5 , 0 , 5">
                         <Button Background="{x:Null}" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="FeauteredStockMenuClicked"></Button>
@@ -35,7 +35,7 @@
                 </StackPanel>
             </SplitView.Pane>
             <SplitView.Content>
-                <TextBlock Text="Featured Stock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"></TextBlock>
+                <TextBlock Text="FUCK OFF"></TextBlock>
             </SplitView.Content>
         </SplitView>
     </Grid>

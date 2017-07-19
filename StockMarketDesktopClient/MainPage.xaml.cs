@@ -13,8 +13,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Net.Http;
-using Microsoft.Data.Sqlite;
-using Microsoft.Data.Sqlite.Internal;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -31,10 +29,11 @@ namespace StockMarketDesktopClient {
         }
 
         private void LoginButtonClick(object sender, RoutedEventArgs e) {
-            if (ValidEmail(EmailBox.Text) && ValidUsernamePassword(PasswordBox.Password)) {
-                OnlineConnectorAsync("Login", "", PasswordBox.Password, EmailBox.Text);
-                SqliteConnection con = new SqliteConnection();
-            }
+
+            this.Frame.Navigate(typeof(Pages.FeaturedStock));
+            //if (ValidEmail(EmailBox.Text) && ValidUsernamePassword(PasswordBox.Password)) {
+            //    OnlineConnectorAsync("Login", "", PasswordBox.Password, EmailBox.Text);
+            //}
         }
 
         bool ValidUsernamePassword(string user) {
@@ -88,8 +87,9 @@ namespace StockMarketDesktopClient {
             var responseString = await client.GetStringAsync(tempURL);
             //while (!w.isDone) yield return null;
 
-            if (responseString.Length > 7 && responseString.Substring(0, 7) == "Correct") {
+            if (responseString.Length >= 7 && responseString.Substring(0, 7) == "Correct") {
                 //Login
+                this.Frame.Navigate(typeof(Pages.FeaturedStock));
             }
             if (responseString == "Wrong") {
                 //Wrong Password
@@ -108,6 +108,10 @@ namespace StockMarketDesktopClient {
             }
             formNick = ""; //just clean our variables
             formPassword = "";
+
+        }
+
+        private void Button_PointerEntered(object sender, PointerRoutedEventArgs e) {
 
         }
     }
