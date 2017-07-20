@@ -10,32 +10,32 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <SplitView x:Name="HB_Menu" IsPaneOpen="False" DisplayMode="CompactOverlay" CompactPaneLength="50" OpenPaneLength="300">
             <SplitView.Pane>
-                <StackPanel Background="Gray">
-                    <Button x:Name="HamburgerButton" HorizontalAlignment="Left" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Background="{x:Null}" Click="HamburgerButton_Click"/>
+                <StackPanel Background="Blue">
+                    <Button x:Name="HamburgerButton" Foreground="White" HorizontalAlignment="Left" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Background="{x:Null}" Click="HamburgerButton_Click"/>
                     <StackPanel Orientation="Horizontal">
-                        <Button Background="{x:Null}" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="PortfolioMenuClicked"></Button>
-                        <Button Content="Portfolio"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="PortfolioMenuClicked"></Button>                       
+                        <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="PortfolioMenuClicked"></Button>
+                        <Button Content="Portfolio"  Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="PortfolioMenuClicked"></Button>                       
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Padding="0, 5 , 0 , 5">
-                        <Button Background="{x:Null}" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="FeauteredStockMenuClicked"></Button>
-                        <Button Content="Featured Stock"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="FeauteredStockMenuClicked"></Button>
+                        <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="FeauteredStockMenuClicked"></Button>
+                        <Button Content="Featured Stock" Foreground="White"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="FeauteredStockMenuClicked"></Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Padding="0, 5 , 0 , 5">
-                        <Button Background="{x:Null}" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="WatchListStockMenuClicked"></Button>
-                        <Button Content ="Watch List"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="WatchListStockMenuClicked"></Button>
+                        <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="WatchListStockMenuClicked"></Button>
+                        <Button Content ="Watch List" Foreground="White"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="WatchListStockMenuClicked"></Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Padding="0, 5 , 0 , 5">
-                        <Button Background="{x:Null}" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="AdvanceSearchMenuClicked"></Button>
-                        <Button Content="Advance Search"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="AdvanceSearchMenuClicked"></Button>
+                        <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="AdvanceSearchMenuClicked"></Button>
+                        <Button Content="Advance Search" Foreground="White"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="AdvanceSearchMenuClicked"></Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Padding="0, 5 , 0 , 5">
-                        <Button Background="{x:Null}" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="AlgoTardingMenuClicked"></Button>
-                        <Button Content="Algo Trading"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="AlgoTardingMenuClicked"></Button>
+                        <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="AlgoTardingMenuClicked"></Button>
+                        <Button Content="Algo Trading" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="AlgoTardingMenuClicked"></Button>
                     </StackPanel>
                 </StackPanel>
             </SplitView.Pane>
             <SplitView.Content>
-                <TextBlock Text="Featured Stock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"></TextBlock>
+                <TextBlock Text="Featured Stock" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="0,10,0,0" FontSize="70"></TextBlock>
             </SplitView.Content>
         </SplitView>
     </Grid>

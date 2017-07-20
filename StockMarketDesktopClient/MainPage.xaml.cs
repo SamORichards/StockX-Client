@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Net.Http;
+using StockMarketDesktopClient.Scripts;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -29,7 +30,7 @@ namespace StockMarketDesktopClient {
         }
 
         private void LoginButtonClick(object sender, RoutedEventArgs e) {
-
+            DataBaseHandler.UserID = 1;
             this.Frame.Navigate(typeof(Pages.FeaturedStock));
             //if (ValidEmail(EmailBox.Text) && ValidUsernamePassword(PasswordBox.Password)) {
             //    OnlineConnectorAsync("Login", "", PasswordBox.Password, EmailBox.Text);

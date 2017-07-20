@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Data.Sqlite;
+using StockMarketDesktopClient.Scripts;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,6 +32,22 @@ namespace StockMarketDesktopClient.Pages.User {
                 HB_Menu.IsPaneOpen = false;
             } else {
                 HB_Menu.IsPaneOpen = true;
+            }
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            base.OnNavigatedTo(e);
+            LoadInventory();
+        }
+
+        private void LoadInventory() {
+            InventoryList.Items.Clear();
+            SqliteDataReader reader = DataBaseHandler.GetData("SELECT DISTINCT StockName FROM StocksInCirculation WHERE OwnerID = " + DataBaseHandler.UserID);
+            List<string> StockNames = new List<string>();
+            while (reader.Read()) {
+                StockNames.Add((string)reader["StockName"]);
+            }
+            foreach (string s in StockNames) {
+                int QuanityOwned = DataBaseHandler.GetCount("SELECT COUNT(StockID) From StocksInCirculation WHERE StockName = '" + s + "' AND OwnerID = " + DataBaseHandler.UserID);
             }
         }
 
@@ -51,6 +69,10 @@ namespace StockMarketDesktopClient.Pages.User {
 
         private void AlgoTardingMenuClicked(object sender, RoutedEventArgs e) {
             this.Frame.Navigate(typeof(Pages.User.AlgoTrading));
+        }
+
+        private void InventoryItemClick(object sender, ItemClickEventArgs e) {
+            
         }
     }
     #endregion

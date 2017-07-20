@@ -9,6 +9,7 @@ using Microsoft.Data.Sqlite.Internal;
 
 namespace StockMarketDesktopClient.Scripts {
     class DataBaseHandler {
+        public static int UserID;
         static string myConnectionString = "server=sammyben.ddns.net;database=StockMarket;uid=Sam;pwd=230999;";
         public static SqliteConnection sqlCon = new SqliteConnection(myConnectionString);
         public static void StartServer() {
