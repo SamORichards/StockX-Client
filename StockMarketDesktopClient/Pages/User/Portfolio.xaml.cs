@@ -48,6 +48,16 @@ namespace StockMarketDesktopClient.Pages.User {
             }
             foreach (string s in StockNames) {
                 int QuanityOwned = DataBaseHandler.GetCount("SELECT COUNT(StockID) From StocksInCirculation WHERE StockName = '" + s + "' AND OwnerID = " + DataBaseHandler.UserID);
+                float AverageCost = DataBaseHandler.GetCount("SELECT AVG(LastTradedPrice) From StocksInCirculation WHERE StockName = '" + s + "' AND OwnerID = " + DataBaseHandler.UserID);
+                float CurrentPrice = 0, OpeningPrice, High, Low;
+                SqliteDataReader StockReader = DataBaseHandler.GetData("SELECT * FROM Stock WHERE StockName = '" + s +"'");
+                while (StockReader.Read()) {
+                    CurrentPrice = (float)StockReader["CurrentPrice"];
+                    OpeningPrice = (float)StockReader["OpeningPriceToday"];
+                    High = (float)StockReader["HighToday"];
+                    Low = (float)StockReader["LowToday"];
+                }
+                float Profit = CurrentPrice - AverageCost;
             }
         }
 
