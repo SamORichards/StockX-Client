@@ -10,7 +10,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <SplitView x:Name="HB_Menu" IsPaneOpen="False" DisplayMode="CompactOverlay" CompactPaneLength="50" OpenPaneLength="300">
             <SplitView.Pane>
-                <StackPanel Background="Blue">
+                <StackPanel Background="DeepSkyBlue">
                     <Button x:Name="HamburgerButton" Foreground="White" HorizontalAlignment="Left" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Background="{x:Null}" Click="HamburgerButton_Click"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="PortfolioMenuClicked"></Button>

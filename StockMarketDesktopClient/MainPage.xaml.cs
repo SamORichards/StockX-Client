@@ -12,8 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using System.Net.Http;
 using StockMarketDesktopClient.Scripts;
+using Pomelo.Data.MySql;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -23,18 +23,15 @@ namespace StockMarketDesktopClient {
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page {
-        private static readonly HttpClient client = new HttpClient();
-        string URL = "http://www.lemonjuicestudios.com/Stocks/S_Login.php";
         public MainPage() {
             this.InitializeComponent();
         }
 
         private void LoginButtonClick(object sender, RoutedEventArgs e) {
             DataBaseHandler.UserID = 1;
-            this.Frame.Navigate(typeof(Pages.FeaturedStock));
-            //if (ValidEmail(EmailBox.Text) && ValidUsernamePassword(PasswordBox.Password)) {
-            //    OnlineConnectorAsync("Login", "", PasswordBox.Password, EmailBox.Text);
-            //}
+            if (ValidEmail(EmailBox.Text) && ValidUsernamePassword(PasswordBox.Password)) {
+                OnlineConnector("Login", "", PasswordBox.Password, EmailBox.Text);
+            }
         }
 
         bool ValidUsernamePassword(string user) {
@@ -78,37 +75,23 @@ namespace StockMarketDesktopClient {
             return false;
         }
 
-        async void OnlineConnectorAsync(string Act, string formNick, string formPassword, string email) {
-            string tempURL;
+        void OnlineConnector(string Act, string formNick, string formPassword, string email) {
             if (Act == "Login") {
-                tempURL = URL + "?Email=" + email + "&Pass=" + formPassword + "&Act=" + Act;
-            } else {
-                tempURL = URL + "?User=" + formNick + "&Pass=" + formPassword + "&Act=" + Act + "&Email=" + email;
+                 MySqlDataReader reader = DataBaseHandler.GetData("SELECT * FROM Users WHERE Email = '" + email + "'");
+                string Nickname = "";
+                int UserId = 0;
+                string Password = "";
+                while (reader.Read()) {
+                    Nickname = (string)reader["Nickname"];
+                    UserId = (int)reader["ID"];
+                    Password = (string)reader["Password"];
+                }
+                if (Password == formPassword) {
+                    DataBaseHandler.Nickname = Nickname;
+                    DataBaseHandler.UserID = UserId;
+                    this.Frame.Navigate(typeof(Pages.FeaturedStock));                    
+                }
             }
-            var responseString = await client.GetStringAsync(tempURL);
-            //while (!w.isDone) yield return null;
-
-            if (responseString.Length >= 7 && responseString.Substring(0, 7) == "Correct") {
-                //Login
-                this.Frame.Navigate(typeof(Pages.FeaturedStock));
-            }
-            if (responseString == "Wrong") {
-                //Wrong Password
-            }
-            if (responseString == "No User") {
-                //Wrong Email
-            }
-            if (responseString == "ILLEGAL REQUEST") {
-                //Registration Was No Corret
-            }
-            if (responseString.Length > 10 && responseString.Substring(0, 10) == "Registered") {
-                //Registration Complete
-            }
-            if (responseString == "ERROR") {
-                //Some sort of error
-            }
-            formNick = ""; //just clean our variables
-            formPassword = "";
 
         }
 

@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Pomelo.Data.MySql;
 using System.Data;
-using Microsoft.Data.Sqlite;
-using Microsoft.Data.Sqlite.Internal;
 
 namespace StockMarketDesktopClient.Scripts {
     class DataBaseHandler {
+        public static string Nickname;
         public static int UserID;
         static string myConnectionString = "server=sammyben.ddns.net;database=StockMarket;uid=Sam;pwd=230999;";
-        public static SqliteConnection sqlCon = new SqliteConnection(myConnectionString);
+        public static MySqlConnection sqlCon = new MySqlConnection(myConnectionString);
         public static void StartServer() {
             OpenConnection();
         }
 
-        public static SqliteDataReader GetData(string command) {
+        public static MySqlDataReader GetData(string command) {
             ReadyConnection();
-            SqliteCommand com = new SqliteCommand(command, sqlCon);
-            SqliteDataReader reader;
+            MySqlCommand com = new MySqlCommand(command, sqlCon);
+            MySqlDataReader reader;
             //for (int i = 0; i < 10; i++) {
             //try {
             reader = com.ExecuteReader();
@@ -40,7 +36,7 @@ namespace StockMarketDesktopClient.Scripts {
 
         public static void SetData(string command) {
             ReadyConnection();
-            SqliteCommand com = new SqliteCommand(command, sqlCon);
+            MySqlCommand com = new MySqlCommand(command, sqlCon);
             //for (int i = 0; i < 10; i++) {
             //try {
             com.ExecuteNonQuery();
@@ -58,7 +54,7 @@ namespace StockMarketDesktopClient.Scripts {
 
         public static int GetCount(string command) {
             ReadyConnection();
-            SqliteCommand com = new SqliteCommand(command, sqlCon);
+            MySqlCommand com = new MySqlCommand(command, sqlCon);
             //for (int i = 0; i < 10; i++) {
             //try {
             string t = com.ExecuteScalar().ToString();
@@ -67,6 +63,7 @@ namespace StockMarketDesktopClient.Scripts {
             } else {
                 return int.Parse(t);
             }
+
             //    } catch {
             //        if (i == 9) {
             //            try {
@@ -78,6 +75,32 @@ namespace StockMarketDesktopClient.Scripts {
             //    }
             //}
         }
+
+        public static double GetCountDouble(string command) {
+            ReadyConnection();
+            MySqlCommand com = new MySqlCommand(command, sqlCon);
+            //for (int i = 0; i < 10; i++) {
+            //try {
+            string t = com.ExecuteScalar().ToString();
+            if (t.Length == 0) {
+                return 0;
+            } else {
+                return double.Parse(t);
+            }
+
+            //    } catch {
+            //        if (i == 9) {
+            //            try {
+            //                sqlCon.Close();
+            //            } catch { }
+            //            OpenConnection();
+            //            i = 0;
+            //        }
+            //    }
+            //}
+        }
+
+
 
 
         static void ReadyConnection() {
