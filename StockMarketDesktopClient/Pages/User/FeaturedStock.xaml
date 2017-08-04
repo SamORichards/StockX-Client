@@ -14,7 +14,7 @@
                     <Button x:Name="HamburgerButton" Foreground="White" HorizontalAlignment="Left" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Background="{x:Null}" Click="HamburgerButton_Click"/>
                     <StackPanel Orientation="Horizontal">
                         <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="PortfolioMenuClicked"></Button>
-                        <Button Content="Portfolio"  Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="PortfolioMenuClicked"></Button>                       
+                        <Button Content="Portfolio"  Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="PortfolioMenuClicked"></Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Padding="0, 5 , 0 , 5">
                         <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="FeauteredStockMenuClicked"></Button>
@@ -35,7 +35,17 @@
                 </StackPanel>
             </SplitView.Pane>
             <SplitView.Content>
-                <TextBlock Text="Featured Stock" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="0,10,0,0" FontSize="70"></TextBlock>
+                <Grid>
+                    <TextBlock Text="Featured Stock" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="0,10,0,0" FontSize="70"></TextBlock>
+                    <RelativePanel HorizontalAlignment="Right" VerticalAlignment="Top" Padding="50,50,50,50">
+                        <TextBox Background="LightGray" Foreground="White"  FontSize="30" PlaceholderText="Search" Name="SearchBox" HorizontalAlignment="Right" VerticalAlignment="Top"  Padding="100,5,100,5"></TextBox>
+                        <Button Click="SearchClick" RelativePanel.RightOf="SearchBox" Height="54" Width="54">
+                            <Button.Content >
+                                <SymbolIcon Symbol="Zoom" />
+                            </Button.Content>
+                        </Button>
+                    </RelativePanel>
+                </Grid>
             </SplitView.Content>
         </SplitView>
     </Grid>

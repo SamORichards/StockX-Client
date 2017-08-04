@@ -40,6 +40,11 @@ namespace StockMarketDesktopClient.Pages {
         private void AlgoTardingMenuClicked(object sender, RoutedEventArgs e) {
             this.Frame.Navigate(typeof(Pages.User.AlgoTrading));
         }
+
+        private void SearchClick(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Pages.User.SearchResults), SearchBox.Text);
+        }
     }
 #endregion
 }

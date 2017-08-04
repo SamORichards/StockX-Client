@@ -53,10 +53,10 @@ namespace StockMarketDesktopClient.Pages.User {
                 int Quantity = (int)reader["Quantity"];
                 StackPanel Panel = new StackPanel();
                 Panel.Orientation = Orientation.Horizontal;
-                Panel.Children.Add(CreateTextBlock(Time.Date.ToString().Split(' ')[0], TextAlignment.Left, 110, 20));
-                Panel.Children.Add(CreateTextBlock(StockName, TextAlignment.Left, 80, 20));
-                Panel.Children.Add(CreateTextBlock("$" + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 90, 20));
-                Panel.Children.Add(CreateTextBlock(Quantity.ToString(), TextAlignment.Left, 148, 20));
+                Panel.Children.Add(Helper.CreateTextBlock(Time.Date.ToString().Split(' ')[0], TextAlignment.Left, 110, 20));
+                Panel.Children.Add(Helper.CreateTextBlock(StockName, TextAlignment.Left, 80, 20));
+                Panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 90, 20));
+                Panel.Children.Add(Helper.CreateTextBlock(Quantity.ToString(), TextAlignment.Left, 148, 20));
                 TradeList.Items.Add(Panel);
             }
         }
@@ -72,13 +72,13 @@ namespace StockMarketDesktopClient.Pages.User {
                 StackPanel Panel = new StackPanel();
                 Panel.Orientation = Orientation.Horizontal;
                 if (Type) {
-                    Panel.Children.Add(CreateTextBlock("Offer", TextAlignment.Left, 110, 20));
+                    Panel.Children.Add(Helper.CreateTextBlock("Offer", TextAlignment.Left, 110, 20));
                 } else {
-                    Panel.Children.Add(CreateTextBlock("Bid", TextAlignment.Left, 110, 20));
+                    Panel.Children.Add(Helper.CreateTextBlock("Bid", TextAlignment.Left, 110, 20));
                 }
-                Panel.Children.Add(CreateTextBlock(StockName, TextAlignment.Left, 80, 20));
-                Panel.Children.Add(CreateTextBlock("$" + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 90, 20));
-                Panel.Children.Add(CreateTextBlock(Quantity.ToString(), TextAlignment.Left, 148, 20));
+                Panel.Children.Add(Helper.CreateTextBlock(StockName, TextAlignment.Left, 80, 20));
+                Panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 90, 20));
+                Panel.Children.Add(Helper.CreateTextBlock(Quantity.ToString(), TextAlignment.Left, 148, 20));
                 BidsAndOffersList.Items.Add(Panel);
             }
         }
@@ -144,10 +144,10 @@ namespace StockMarketDesktopClient.Pages.User {
                 double PercentageChange = RealChangeInPrice / OpeningPrice;
                 StackPanel Panel = new StackPanel();
                 Panel.Orientation = Orientation.Horizontal;
-                Panel.Children.Add(CreateTextBlock(s, TextAlignment.Left, 100, 20));
-                Panel.Children.Add(CreateTextBlock(FullName, TextAlignment.Left, 250, 20));
-                Panel.Children.Add(CreateTextBlock(CurrentPrice.ToString(), TextAlignment.Left, 200, 20));
-                TextBlock RealChangeInPriceBlock = CreateTextBlock(RealChangeInPrice.ToString().Substring(0, 6), TextAlignment.Left, 100, 20);
+                Panel.Children.Add(Helper.CreateTextBlock(s, TextAlignment.Left, 100, 20));
+                Panel.Children.Add(Helper.CreateTextBlock(FullName, TextAlignment.Left, 250, 20));
+                Panel.Children.Add(Helper.CreateTextBlock(CurrentPrice.ToString(), TextAlignment.Left, 200, 20));
+                TextBlock RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString().Substring(0, 6), TextAlignment.Left, 100, 20);
                 if (RealChangeInPrice < 0) {
                     RealChangeInPriceBlock.Foreground = new SolidColorBrush(Colors.Red);
                 } else {
@@ -155,25 +155,16 @@ namespace StockMarketDesktopClient.Pages.User {
                 }
                 Panel.Children.Add(RealChangeInPriceBlock);
 
-                TextBlock PercentageChangeBlock = CreateTextBlock(PercentageChange.ToString().Substring(0, 4) + "%", TextAlignment.Left, 100, 20);
+                TextBlock PercentageChangeBlock = Helper.CreateTextBlock(PercentageChange.ToString().Substring(0, 4) + "%", TextAlignment.Left, 100, 20);
                 if (RealChangeInPrice < 0) {
                     PercentageChangeBlock.Foreground = new SolidColorBrush(Colors.Red);
                 } else {
                     PercentageChangeBlock.Foreground = new SolidColorBrush(Colors.Green);
                 }
                 Panel.Children.Add(PercentageChangeBlock);
-                Panel.Children.Add(CreateTextBlock(Profit.ToString(), TextAlignment.Left, 200, 20));
+                Panel.Children.Add(Helper.CreateTextBlock(Profit.ToString(), TextAlignment.Left, 200, 20));
                 InventoryList.Items.Add(Panel);
             }
-        }
-
-        TextBlock CreateTextBlock(string Text, TextAlignment al, int Width, int fontSize) {
-            TextBlock block = new TextBlock();
-            block.Text = Text;
-            block.TextAlignment = al;
-            block.Width = Width;
-            block.FontSize = fontSize;
-            return block;
         }
 
         private void PortfolioMenuClicked(object sender, RoutedEventArgs e) {

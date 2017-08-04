@@ -12,8 +12,8 @@
             <RowDefinition Height="49*"/>
             <RowDefinition Height="131*"/>
         </Grid.RowDefinitions>
-        <Image Source="Assets/SimX Logo.png" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="670,55,669,22" Height="217" Width="581" />
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1"  Margin="670,50,670,174">
+        <Image Source="Assets/SimX Logo.png" VerticalAlignment="Center" HorizontalAlignment="Center"  Height="217" Width="581" />
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" >
             <TextBox Background="LightGray" Foreground="White"  FontSize="30" PlaceholderText="Example@YourDomain.com" Name="EmailBox">
                 <TextBox.Header>
                     <TextBlock Foreground="DeepSkyBlue" Text="Email" FontSize="45"></TextBlock>
