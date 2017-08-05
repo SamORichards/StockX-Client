@@ -57,7 +57,10 @@ namespace StockMarketDesktopClient.Pages.User {
                 panel.Children.Add(Helper.CreateTextBlock(Symbol, TextAlignment.Left, 100, 20));
                 panel.Children.Add(Helper.CreateTextBlock(FullName, TextAlignment.Left, 250, 20));
                 panel.Children.Add(Helper.CreateTextBlock(Price.ToString().Split('.')[0] + Price.ToString().Split('.')[1].Substring(0, 4), TextAlignment.Left, 100, 20));
-                TextBlock RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString().Substring(0, 6), TextAlignment.Left, 100, 20);
+                TextBlock RealChangeInPriceBlock = Helper.CreateTextBlock(0.ToString(), TextAlignment.Left, 100, 20);
+                if (RealChangeInPrice != 0) {
+                    RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString().Substring(0, 6), TextAlignment.Left, 100, 20);
+                }
                 if (RealChangeInPrice < 0) {
                     RealChangeInPriceBlock.Foreground = new SolidColorBrush(Colors.Red);
                 } else {
@@ -76,7 +79,8 @@ namespace StockMarketDesktopClient.Pages.User {
         }
 
         private void ItemClickedListView(object sender, TappedRoutedEventArgs e) {
-            this.Frame.Navigate(typeof(Pages.User.StockPage), "zptcmc");
+            string StockName = (((sender as ListView).SelectedItem as StackPanel).Children[0] as TextBlock).Text;
+            this.Frame.Navigate(typeof(Pages.User.StockPage), StockName);
         }
     }
 }

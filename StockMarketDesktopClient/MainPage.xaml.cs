@@ -94,9 +94,5 @@ namespace StockMarketDesktopClient {
             }
 
         }
-
-        private void Button_PointerEntered(object sender, PointerRoutedEventArgs e) {
-
-        }
     }
 }

@@ -8,11 +8,23 @@
     xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     mc:Ignorable="d"
     >
-    <Grid>
-        <StackPanel>
-            <Charting:Chart x:Name="LineChart" HorizontalAlignment="Center" VerticalAlignment="Center" Height="600" Width="1000">
-                <Charting:LineSeries Title="Pricing H" Margin="0" IndependentValuePath="Time" DependentValuePath="Price" IsSelectionEnabled="True"/>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Stock" Name="StockNameTitle" FontSize="50" Padding="0,25,0,50" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <Charting:Chart x:Name="LineChart" HorizontalAlignment="Left" VerticalAlignment="Center" Height="500" Width="1000" Padding="50">
+                <Charting:LineSeries Title="Pricing History" Margin="0" VerticalAlignment="Center" IndependentValuePath="Time" DependentValuePath="Price" IsSelectionEnabled="True"/>
             </Charting:Chart>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Name="CurrentPriceBlock" Text="Current Price: " FontSize="24"></TextBlock>
+                <TextBlock Name="ChangeInPrice" Text="Change In Price: " FontSize="24"></TextBlock>
+                <TextBlock Name="ChangeInPricePercentage" Text="Current Price: " FontSize="24"></TextBlock>
+                <TextBlock Name="VolumeTradedToday" Text="Volume Traded: " FontSize="24" Padding="0,0,0,50"></TextBlock>
+                <Button Content="Buy" Click="BuyButton" Width="175" Height="75" Background="Green" FontSize="28"></Button>
+                <TextBlock Padding="0,0,0,25"></TextBlock>
+                <Button Content="Sell" Click="SellButton" Width="175" Height="75" Background="Red" FontSize="28"></Button>
+            </StackPanel>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>
