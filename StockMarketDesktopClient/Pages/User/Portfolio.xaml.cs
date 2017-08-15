@@ -109,7 +109,11 @@ namespace StockMarketDesktopClient.Pages.User {
                     Panel.Children.Add(Helper.CreateTextBlock("Bid", TextAlignment.Left, 55, 20));
                 }
                 Panel.Children.Add(Helper.CreateTextBlock(StockName, TextAlignment.Left, 80, 20));
-                Panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 75, 20));
+                TextBlock PriceBox = Helper.CreateTextBlock("$" + Price.ToString(), TextAlignment.Left, 75, 20);
+                if (Price.ToString().Contains('.')) {
+                    Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 75, 20);
+                }
+                Panel.Children.Add(PriceBox);
                 Panel.Children.Add(Helper.CreateTextBlock(Quantity.ToString(), TextAlignment.Left, 148, 20));
                 BidsAndOffersList.Items.Add(Panel);
             }
@@ -190,7 +194,10 @@ namespace StockMarketDesktopClient.Pages.User {
                 Panel.Children.Add(Helper.CreateTextBlock(s, TextAlignment.Left, 100, 20));
                 Panel.Children.Add(Helper.CreateTextBlock(FullName, TextAlignment.Left, 250, 20));
                 Panel.Children.Add(Helper.CreateTextBlock(CurrentPrice.ToString(), TextAlignment.Left, 200, 20));
-                TextBlock RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString().Substring(0, 6), TextAlignment.Left, 100, 20);
+                TextBlock RealChangeInPriceBlock =  Helper.CreateTextBlock(RealChangeInPrice.ToString(), TextAlignment.Left, 100, 20);
+                if (RealChangeInPrice.ToString().Contains('.')) {
+                    RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString().Split('.')[0] + "." + RealChangeInPrice.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 100, 20);
+                }
                 if (RealChangeInPrice < 0) {
                     RealChangeInPriceBlock.Foreground = new SolidColorBrush(Colors.Red);
                 } else {
@@ -198,7 +205,10 @@ namespace StockMarketDesktopClient.Pages.User {
                 }
                 Panel.Children.Add(RealChangeInPriceBlock);
 
-                TextBlock PercentageChangeBlock = Helper.CreateTextBlock(PercentageChange.ToString().Substring(0, 4) + "%", TextAlignment.Left, 100, 20);
+                TextBlock PercentageChangeBlock = Helper.CreateTextBlock(PercentageChange.ToString() + "%", TextAlignment.Left, 100, 20);
+                if (PercentageChange.ToString().Contains('.')){
+                    PercentageChangeBlock = Helper.CreateTextBlock(PercentageChange.ToString().Split('.')[0] + "." + PercentageChange.ToString().Split('.')[1].Substring(0, 2) + "%", TextAlignment.Left, 100, 20);
+                }
                 if (RealChangeInPrice < 0) {
                     PercentageChangeBlock.Foreground = new SolidColorBrush(Colors.Red);
                 } else {

@@ -3,6 +3,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using StockMarketDesktopClient.Scripts;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -14,10 +15,9 @@ namespace StockMarketDesktopClient.Pages {
         public FeaturedStock() {
             this.InitializeComponent();
         }
-        bool FirstLoad = true;
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
-            if (FirstLoad) {
+            if (Helper.FirstLoad) {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                 SystemNavigationManager.GetForCurrentView().BackRequested += (s, ev) => {
                     if (Frame.CanGoBack) {
@@ -25,7 +25,7 @@ namespace StockMarketDesktopClient.Pages {
                         ev.Handled = true;
                     }
                 };
-                FirstLoad = false;
+                Helper.FirstLoad = false;
             }
         }
         #region HB Menu

@@ -35,7 +35,15 @@
                 </StackPanel>
             </SplitView.Pane>
             <SplitView.Content>
-                <StackPanel Orientation="Horizontal" Name="panel" Padding="75"></StackPanel>
+                <StackPanel Orientation="Vertical" Name="panel" Padding="75" HorizontalAlignment="Center">
+                    <TextBlock Text="Algorithmic Traders" FontSize="45" ></TextBlock>
+                    <ListView Name="TradersList" Padding="0,25,0,25">
+                        <ListView.Header>
+                            <TextBlock Text="Trader ID" FontSize="24"></TextBlock>                            
+                        </ListView.Header>
+                    </ListView>
+                    <Button Content="Create Trader" Click="CreateTraderButton" Background="DeepSkyBlue" Foreground="White" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="50"  Style="{StaticResource ButtonStyle1}"  ></Button>
+                </StackPanel>
             </SplitView.Content>
         </SplitView>
     </Grid>
