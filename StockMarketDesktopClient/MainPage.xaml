@@ -13,7 +13,7 @@
             <RowDefinition Height="131*"/>
         </Grid.RowDefinitions>
         <Image Source="Assets/SimX Logo.png" VerticalAlignment="Center" HorizontalAlignment="Center"  Height="217" Width="581" />
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" >
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Name="StackList" >
             <TextBox Background="LightGray" Foreground="White"  FontSize="30" PlaceholderText="Example@YourDomain.com" Name="EmailBox">
                 <TextBox.Header>
                     <TextBlock Foreground="DeepSkyBlue" Text="Email" FontSize="45"></TextBlock>
@@ -24,9 +24,9 @@
                     <TextBlock Foreground="DeepSkyBlue" Text="Password" FontSize="45"></TextBlock>
                 </PasswordBox.Header>
             </PasswordBox>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Content="Login" Background="DeepSkyBlue" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="250" Height="88" Click="LoginButtonClick" Style="{StaticResource ButtonStyle1}"  ></Button>
-                <Button Content="Register" Background="DeepSkyBlue" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="250" Height="88" Style="{StaticResource ButtonStyle1}"  ></Button>
+            <StackPanel Name="Buttons" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="Login" Name="LoginButton" Background="DeepSkyBlue" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="250" Height="88" Click="LoginButtonClick" Style="{StaticResource ButtonStyle1}"  ></Button>
+                <Button Content="Register" Name="RegistrationButton" Background="DeepSkyBlue" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="250" Height="88" Click="RegisteredButtonClick" Style="{StaticResource ButtonStyle1}"  ></Button>
             </StackPanel>
         </StackPanel>
     </Grid>

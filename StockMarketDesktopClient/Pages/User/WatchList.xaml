@@ -35,7 +35,10 @@
                 </StackPanel>
             </SplitView.Pane>
             <SplitView.Content>
-                <TextBlock Text="Featured Stock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"></TextBlock>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock Text="Watch List"  Padding="0,30,0,0" FontSize="70" ></TextBlock>
+                    <ListView Name="WatchListList" Padding=" 50,30,50,10"  Tapped="ItemClickedListView"></ListView>
+                </StackPanel>
             </SplitView.Content>
         </SplitView>
     </Grid>

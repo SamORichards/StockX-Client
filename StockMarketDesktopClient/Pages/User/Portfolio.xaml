@@ -1,13 +1,47 @@
-﻿<Page
+﻿<Page Name="PagePane"
     x:Class="StockMarketDesktopClient.Pages.User.Portfolio"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StockMarketDesktopClient.Pages.User"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-
+    mc:Ignorable="d"
+    SizeChanged="ScreenChanged"
+    >
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="MainGroup">
+                <VisualState x:Name="SmallerDesktopVisualState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BankText.FontSize" Value="35"></Setter>
+                        <Setter Target="FundsAvailableText.FontSize" Value="12"></Setter>
+                        <Setter Target="InventoryValueText.FontSize" Value="12"></Setter>
+                        <Setter Target="BalanceText.FontSize" Value="12"></Setter>
+                        <Setter Target="TradeText.FontSize" Value="28"></Setter>
+                        <Setter Target="BidsAndOfferText.FontSize" Value="28"></Setter>
+                        <Setter Target="InventoryValueText.Padding" Value="0,4,0,0"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="LargerDesktopVisualState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1400"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BankText.FontSize" Value="45"></Setter>
+                        <Setter Target="FundsAvailableText.FontSize" Value="22"></Setter>
+                        <Setter Target="InventoryValueText.FontSize" Value="22"></Setter>
+                        <Setter Target="BalanceText.FontSize" Value="22"></Setter>
+                        <Setter Target="TradeText.FontSize" Value="40"></Setter>
+                        <Setter Target="BidsAndOfferText.FontSize" Value="40"></Setter>
+                        <Setter Target="InventoryValueText.Padding" Value="0,8,0,0"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <SplitView x:Name="HB_Menu" IsPaneOpen="False" DisplayMode="CompactOverlay" CompactPaneLength="50" OpenPaneLength="300">
             <SplitView.Pane>
                 <StackPanel Background="DeepSkyBlue">
@@ -60,16 +94,16 @@
                         <RowDefinition Height="123*"/>
                     </Grid.RowDefinitions>
                     <Rectangle Fill="LightGray" Grid.Row="1" Grid.RowSpan="8" Grid.Column="6" Grid.ColumnSpan="2"></Rectangle>
-                    <TextBlock Text="Bank" TextAlignment="Center" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="45" Height="60" Margin="62,32,62,31" Width="97"></TextBlock>
+                    <TextBlock Text="Bank"  x:Name="BankText" TextAlignment="Center" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="45" ></TextBlock>
                     <StackPanel Orientation="Vertical" Grid.Column="6" Grid.Row="2" Grid.ColumnSpan="2">
-                        <TextBlock Text="Bank" Name="FundsAvailableText" TextAlignment="Left"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"></TextBlock>
-                        <TextBlock Text="Bank" Name="InventoryValueText" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Padding="0,15,0,0"></TextBlock>
+                        <TextBlock Text="Bank" x:Name="FundsAvailableText" TextAlignment="Left"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"></TextBlock>
+                        <TextBlock Text="Bank" x:Name="InventoryValueText" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Padding="0,15,0,0"></TextBlock>
                     </StackPanel>
-                    <TextBlock Text="Bank" Name="BalanceText" TextAlignment="Center" Grid.Column="7" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22"></TextBlock>
+                    <TextBlock Text="Bank" x:Name="BalanceText" TextAlignment="Center" Grid.Column="7" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22"></TextBlock>
                     <TextBlock Text="Portfolio" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="0,10,0,0" FontSize="70" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2"></TextBlock>
                     <!--<Rectangle Fill="LightGray" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="6"></Rectangle>-->
-                    <TextBlock Text="Inventory" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="0,10,0,0" FontSize="40" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="1" Height="63" Margin="138,0" Width="166"></TextBlock>
-                    <ListView x:Name="InventoryList" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" Grid.RowSpan="7" ItemClick="InventoryItemClick">
+                    <TextBlock Text="Inventory" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="0,10,0,0" FontSize="40" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="1"></TextBlock>
+                    <ListView x:Name="InventoryList" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" Grid.RowSpan="7" Tapped="InventoryItemClicked">
                         <ListView.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Symbol" FontSize="20" Width="100" TextAlignment="Left"></TextBlock>
@@ -81,28 +115,30 @@
                         </ListView.Header>
                     </ListView>
                     <!--<Rectangle Fill="LightGray" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="6"></Rectangle>-->
-                    <TextBlock Text="Trades" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Column="6" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="1" Height="53" Margin="165,7,165,5" Width="113"></TextBlock>
-                    <ListView x:Name="TradeList" Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="4" Grid.RowSpan="2" ItemClick="InventoryItemClick">
+                    <TextBlock x:Name="TradeText" Text="Trades" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Column="6" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="1" ></TextBlock>
+                    <ListView x:Name="TradeList" Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="4" Grid.RowSpan="2" >
                         <ListView.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="  Time" FontSize="20" Width="120" TextAlignment="Left"></TextBlock>
+                                <TextBlock Text="  Date"  FontSize="20" Width="100" TextAlignment="Left"></TextBlock>
+                                <TextBlock Text="Type" FontSize="20" Width="70" TextAlignment="Left"></TextBlock>
                                 <TextBlock Text="Name"  FontSize="20" Width="80" TextAlignment="Left"></TextBlock>
-                                <TextBlock Text="Price"  FontSize="20" Width= "90" TextAlignment="Left"></TextBlock>
+                                <TextBlock Text="Price"  FontSize="20" Width= "75" TextAlignment="Left"></TextBlock>
                                 <TextBlock Text="Quantity"  FontSize="20" Width= "146" TextAlignment="Left"></TextBlock>
                             </StackPanel>
                         </ListView.Header>
                     </ListView>
-                    <TextBlock Text="Bids And Offers" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Column="6" Grid.Row="6" Grid.ColumnSpan="2" Grid.RowSpan="1" Height="53" Margin="85,8,84,7" Width="274"></TextBlock>
-                    <ListView x:Name="BidsAndOffersList" Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="7" Grid.RowSpan="2" ItemClick="InventoryItemClick">
+                    <TextBlock x:Name="BidsAndOfferText"  Text="Bids And Offers" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Column="6" Grid.Row="6" Grid.ColumnSpan="2" Grid.RowSpan="1" ></TextBlock>
+                    <ListView x:Name="BidsAndOffersList" Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="7" Grid.RowSpan="2">
                         <ListView.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="  Type" FontSize="20" Width="120" TextAlignment="Left"></TextBlock>
+                                <TextBlock Text="  Type" FontSize="20" Width="70" TextAlignment="Left"></TextBlock>
                                 <TextBlock Text="Name"  FontSize="20" Width="80" TextAlignment="Left"></TextBlock>
-                                <TextBlock Text="Price"  FontSize="20" Width= "90" TextAlignment="Left"></TextBlock>
+                                <TextBlock Text="Price"  FontSize="20" Width= "75" TextAlignment="Left"></TextBlock>
                                 <TextBlock Text="Quantity"  FontSize="20" Width= "146" TextAlignment="Left"></TextBlock>
                             </StackPanel>
                         </ListView.Header>
                     </ListView>
+
                 </Grid>
             </SplitView.Content>
         </SplitView>

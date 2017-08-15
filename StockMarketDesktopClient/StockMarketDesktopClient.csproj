@@ -104,6 +104,12 @@
     <Compile Include="Pages\User\AlgoTrading.xaml.cs">
       <DependentUpon>AlgoTrading.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\User\BuySellPage.xaml.cs">
+      <DependentUpon>BuySellPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\User\CreateTrader.xaml.cs">
+      <DependentUpon>CreateTrader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\User\FeaturedStock.xaml.cs">
       <DependentUpon>FeaturedStock.xaml</DependentUpon>
     </Compile>
@@ -203,6 +209,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\User\BuySellPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\User\CreateTrader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\User\FeaturedStock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -237,6 +251,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\Admin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Syncfusion Controls for UWP XAML, Version=15.3.0.26">
+      <Name>Syncfusion Controls for UWP XAML</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

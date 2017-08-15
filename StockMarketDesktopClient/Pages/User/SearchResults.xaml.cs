@@ -21,19 +21,12 @@ using Windows.UI;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace StockMarketDesktopClient.Pages.User {
-    /// <summary>
+    /// <summary> 
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class SearchResults : Page {
         public SearchResults() {
             this.InitializeComponent();
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) => {
-                if (Frame.CanGoBack) {
-                    Frame.GoBack();
-                    e.Handled = true;
-                }
-            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
@@ -56,9 +49,9 @@ namespace StockMarketDesktopClient.Pages.User {
                 panel.Orientation = Orientation.Horizontal;
                 panel.Children.Add(Helper.CreateTextBlock(Symbol, TextAlignment.Left, 100, 20));
                 panel.Children.Add(Helper.CreateTextBlock(FullName, TextAlignment.Left, 250, 20));
-                panel.Children.Add(Helper.CreateTextBlock(Price.ToString().Split('.')[0] + Price.ToString().Split('.')[1].Substring(0, 4), TextAlignment.Left, 100, 20));
-                TextBlock RealChangeInPriceBlock = Helper.CreateTextBlock(0.ToString(), TextAlignment.Left, 100, 20);
-                if (RealChangeInPrice != 0) {
+                panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + '.' + Price.ToString().Split('.')[1].Substring(0, 4), TextAlignment.Left, 100, 20));
+                TextBlock RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString(), TextAlignment.Left, 100, 20);
+                if (RealChangeInPrice.ToString().Contains('.')) {
                     RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString().Substring(0, 6), TextAlignment.Left, 100, 20);
                 }
                 if (RealChangeInPrice < 0) {
@@ -67,7 +60,12 @@ namespace StockMarketDesktopClient.Pages.User {
                     RealChangeInPriceBlock.Foreground = new SolidColorBrush(Colors.Green);
                 }
                 panel.Children.Add(RealChangeInPriceBlock);
-                TextBlock PercentageChangeBlock = Helper.CreateTextBlock(PercentageChange.ToString().Substring(0, 4) + "%", TextAlignment.Left, 100, 20);
+                TextBlock PercentageChangeBlock;
+                if (PercentageChange.ToString().Contains('.')) {
+                    PercentageChangeBlock = Helper.CreateTextBlock(PercentageChange.ToString().Substring(0, 4) + "%", TextAlignment.Left, 100, 20);
+                } else {
+                    PercentageChangeBlock = Helper.CreateTextBlock(PercentageChange.ToString() + "%", TextAlignment.Left, 100, 20);
+                }
                 if (RealChangeInPrice < 0) {
                     PercentageChangeBlock.Foreground = new SolidColorBrush(Colors.Red);
                 } else {
@@ -84,3 +82,4 @@ namespace StockMarketDesktopClient.Pages.User {
         }
     }
 }
+ 

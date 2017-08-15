@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using Pomelo.Data.MySql;
 using StockMarketDesktopClient.Scripts;
 using Windows.UI;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,11 +23,12 @@ namespace StockMarketDesktopClient.Pages.User {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
+
     public sealed partial class Portfolio : Page {
         public Portfolio() {
             this.InitializeComponent();
         }
-
         #region HB Menu
         private void HamburgerButton_Click(object sender, RoutedEventArgs e) {
             if (HB_Menu.IsPaneOpen) {
@@ -35,6 +37,28 @@ namespace StockMarketDesktopClient.Pages.User {
                 HB_Menu.IsPaneOpen = true;
             }
         }
+
+        private void PortfolioMenuClicked(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Pages.User.Portfolio));
+        }
+
+        private void FeauteredStockMenuClicked(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Pages.FeaturedStock));
+        }
+
+        private void WatchListStockMenuClicked(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Pages.User.WatchList));
+        }
+
+        private void AdvanceSearchMenuClicked(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Pages.User.AdvanceSearch));
+        }
+
+        private void AlgoTardingMenuClicked(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Pages.User.AlgoTrading));
+        }
+        #endregion
+
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
             LoadInventory();
@@ -45,17 +69,25 @@ namespace StockMarketDesktopClient.Pages.User {
 
         private void LoadTrades() {
             TradeList.Items.Clear();
-            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, StockName, Price, Quantity FROM Trades WHERE BuyerID = " + DataBaseHandler.UserID + " OR SellerID = " + DataBaseHandler.UserID);
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, StockName, BuyerID, Price, Quantity FROM Trades WHERE BuyerID = " + DataBaseHandler.UserID + " OR SellerID = " + DataBaseHandler.UserID);
             while (reader.Read()) {
                 DateTime Time = (DateTime)reader["Time"];
                 string StockName = (string)reader["StockName"];
+                int BuyerID = (int)reader["BuyerID"];
                 double Price = (double)reader["Price"];
                 int Quantity = (int)reader["Quantity"];
                 StackPanel Panel = new StackPanel();
                 Panel.Orientation = Orientation.Horizontal;
-                Panel.Children.Add(Helper.CreateTextBlock(Time.Date.ToString().Split(' ')[0], TextAlignment.Left, 110, 20));
+                string Date = Time.Date.ToString().Split(' ')[0];
+                Date = Date.Split('/')[0] + "/" + Date.Split('/')[1] + "/" + Date.Split('/')[2][2] + Date.Split('/')[2][3];
+                Panel.Children.Add(Helper.CreateTextBlock(Date, TextAlignment.Left, 110, 20));
+                if (BuyerID == DataBaseHandler.UserID) {
+                    Panel.Children.Add(Helper.CreateTextBlock("Bid", TextAlignment.Left, 55, 20));
+                } else {
+                    Panel.Children.Add(Helper.CreateTextBlock("Offer", TextAlignment.Left, 55, 20));
+                }
                 Panel.Children.Add(Helper.CreateTextBlock(StockName, TextAlignment.Left, 80, 20));
-                Panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 90, 20));
+                Panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 75, 20));
                 Panel.Children.Add(Helper.CreateTextBlock(Quantity.ToString(), TextAlignment.Left, 148, 20));
                 TradeList.Items.Add(Panel);
             }
@@ -72,12 +104,12 @@ namespace StockMarketDesktopClient.Pages.User {
                 StackPanel Panel = new StackPanel();
                 Panel.Orientation = Orientation.Horizontal;
                 if (Type) {
-                    Panel.Children.Add(Helper.CreateTextBlock("Offer", TextAlignment.Left, 110, 20));
+                    Panel.Children.Add(Helper.CreateTextBlock("Offer", TextAlignment.Left, 55, 20));
                 } else {
-                    Panel.Children.Add(Helper.CreateTextBlock("Bid", TextAlignment.Left, 110, 20));
+                    Panel.Children.Add(Helper.CreateTextBlock("Bid", TextAlignment.Left, 55, 20));
                 }
                 Panel.Children.Add(Helper.CreateTextBlock(StockName, TextAlignment.Left, 80, 20));
-                Panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 90, 20));
+                Panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 75, 20));
                 Panel.Children.Add(Helper.CreateTextBlock(Quantity.ToString(), TextAlignment.Left, 148, 20));
                 BidsAndOffersList.Items.Add(Panel);
             }
@@ -90,14 +122,22 @@ namespace StockMarketDesktopClient.Pages.User {
             while (reader.Read()) {
                 MoneyInPool += (double)reader["Price"] * (int)reader["Quantity"];
             }
-            BalanceText.Text = "Balance: $" + Balance.ToString().Split('.')[0] + "." + Balance.ToString().Split('.')[1].Substring(0, 2);
+            if (Balance.ToString().Contains('.')) {
+                BalanceText.Text = "Balance: $" + Balance.ToString().Split('.')[0] + "." + Balance.ToString().Split('.')[1].Substring(0, 2);
+            } else {
+                BalanceText.Text = "Balance: $" + Balance.ToString();
+            }
             if (Balance < 0) {
                 BalanceText.Foreground = new SolidColorBrush(Colors.Red);
             } else {
                 BalanceText.Foreground = new SolidColorBrush(Colors.Green);
             }
             double FundsAvailable = Balance - MoneyInPool;
-            FundsAvailableText.Text = "  Funds Available: $" + FundsAvailable.ToString().Split('.')[0] + "." + FundsAvailable.ToString().Split('.')[1].Substring(0, 2);
+            if (FundsAvailable.ToString().Contains('.')) {
+                FundsAvailableText.Text = "  Funds Available: $" + FundsAvailable.ToString().Split('.')[0] + "." + FundsAvailable.ToString().Split('.')[1].Substring(0, 2);
+            } else {
+                FundsAvailableText.Text = "  Funds Available: $" + FundsAvailable;
+            }
             if (FundsAvailable < 0) {
                 FundsAvailableText.Text = "  Funds Available: $0";
                 FundsAvailableText.Foreground = new SolidColorBrush(Colors.Red);
@@ -113,8 +153,11 @@ namespace StockMarketDesktopClient.Pages.User {
                 int QuantityOwner = DataBaseHandler.GetCount("SELECT Count(StockID) From StocksInCirculation WHERE OwnerID = " + DataBaseHandler.UserID + " AND " + " StockName = '" + StockNames[i] + "'");
                 InventoryValue += CurrentPrice * (double)QuantityOwner;
             }
-            string InventoryValueString = InventoryValue.ToString();
-            InventoryValueText.Text = "  Invetory Value: $" + InventoryValueString.ToString().Split('.')[0] + "." + InventoryValueString.ToString().Split('.')[1].Substring(0, 2);
+            if (InventoryValue.ToString().Contains('.')) {
+                InventoryValueText.Text = "  Invetory Value: $" + InventoryValue.ToString().Split('.')[0] + "." + InventoryValue.ToString().Split('.')[1].Substring(0, 2);
+            } else {
+                InventoryValueText.Text = "  Invetory Value: $" + InventoryValue;
+            }
         }
 
         private void LoadInventory() {
@@ -167,30 +210,82 @@ namespace StockMarketDesktopClient.Pages.User {
             }
         }
 
-        private void PortfolioMenuClicked(object sender, RoutedEventArgs e) {
-            this.Frame.Navigate(typeof(Pages.User.Portfolio));
+
+        private void ScreenChanged(object sender, SizeChangedEventArgs e) {
+            if (PagePane.ActualWidth < 1400 && screenState != ScreenState.SmallDesktop) {
+                screenState = ScreenState.SmallDesktop;
+                foreach (TextBlock block in (InventoryList.Header as StackPanel).Children) {
+                    block.FontSize = block.FontSize / 1.5;
+                    block.Width = block.Width / 1.5;
+                }
+                foreach (StackPanel panel in InventoryList.Items) {
+                    foreach (TextBlock block in panel.Children) {
+                        block.FontSize = block.FontSize / 1.5;
+                        block.Width = block.Width / 1.5;
+                    }
+                }
+                foreach (TextBlock block in (TradeList.Header as StackPanel).Children) {
+                    block.FontSize = block.FontSize / 1.5;
+                    block.Width = block.Width / 1.5;
+                }
+                foreach (StackPanel panel in TradeList.Items) {
+                    foreach (TextBlock block in panel.Children) {
+                        block.FontSize = block.FontSize / 1.5;
+                        block.Width = block.Width / 1.5;
+                    }
+                }
+                foreach (TextBlock block in (BidsAndOffersList.Header as StackPanel).Children) {
+                    block.FontSize = block.FontSize / 1.5;
+                    block.Width = block.Width / 1.5;
+                }
+                foreach (StackPanel panel in BidsAndOffersList.Items) {
+                    foreach (TextBlock block in panel.Children) {
+                        block.FontSize = block.FontSize / 1.5;
+                        block.Width = block.Width / 1.5;
+                    }
+                }
+            } else if (PagePane.ActualWidth > 1400 && screenState != ScreenState.JustLoaded && screenState != ScreenState.BigDesktop) {
+                screenState = ScreenState.BigDesktop;
+                foreach (TextBlock block in (InventoryList.Header as StackPanel).Children) {
+                    block.FontSize = block.FontSize * 1.5;
+                    block.Width = block.Width * 1.5;
+                }
+                foreach (StackPanel panel in InventoryList.Items) {
+                    foreach (TextBlock block in panel.Children) {
+                        block.FontSize = block.FontSize * 1.5;
+                        block.Width = block.Width * 1.5;
+                    }
+                }
+                foreach (TextBlock block in (TradeList.Header as StackPanel).Children) {
+                    block.FontSize = block.FontSize * 1.5;
+                    block.Width = block.Width * 1.5;
+                }
+                foreach (StackPanel panel in TradeList.Items) {
+                    foreach (TextBlock block in panel.Children) {
+                        block.FontSize = block.FontSize * 1.5;
+                        block.Width = block.Width * 1.5;
+                    }
+                }
+                foreach (TextBlock block in (BidsAndOffersList.Header as StackPanel).Children) {
+                    block.FontSize = block.FontSize * 1.5;
+                    block.Width = block.Width * 1.5;
+                }
+                foreach (StackPanel panel in BidsAndOffersList.Items) {
+                    foreach (TextBlock block in panel.Children) {
+                        block.FontSize = block.FontSize * 1.5;
+                        block.Width = block.Width * 1.5;
+                    }
+                }
+            }
         }
 
-        private void FeauteredStockMenuClicked(object sender, RoutedEventArgs e) {
-            this.Frame.Navigate(typeof(Pages.FeaturedStock));
-        }
-
-        private void WatchListStockMenuClicked(object sender, RoutedEventArgs e) {
-            this.Frame.Navigate(typeof(Pages.User.WatchList));
-        }
-
-        private void AdvanceSearchMenuClicked(object sender, RoutedEventArgs e) {
-            this.Frame.Navigate(typeof(Pages.User.AdvanceSearch));
-        }
-
-        private void AlgoTardingMenuClicked(object sender, RoutedEventArgs e) {
-            this.Frame.Navigate(typeof(Pages.User.AlgoTrading));
-        }
-
-        private void InventoryItemClick(object sender, ItemClickEventArgs e) {
+        private void InventoryItemClicked(object sender, TappedRoutedEventArgs e) {
+            string StockName = (((sender as ListView).SelectedItem as StackPanel).Children[0] as TextBlock).Text;
+            this.Frame.Navigate(typeof(Pages.User.StockPage), StockName);
 
         }
+        ScreenState screenState = ScreenState.JustLoaded;
     }
-    #endregion
+    enum ScreenState { SmallDesktop, BigDesktop, JustLoaded}
 }
 

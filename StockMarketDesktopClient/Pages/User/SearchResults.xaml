@@ -12,7 +12,16 @@
             <RowDefinition Height="19*"/>
             <RowDefinition Height="101*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Search Results" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" Padding="0,10,0,0" FontSize="70" ></TextBlock>
-        <ListView Name="SearchResultList" Padding=" 10,100,10,10" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Tapped="ItemClickedListView"></ListView>
+        <TextBlock Text="Search Results" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" Padding="0,10,0,50" FontSize="70" ></TextBlock>
+        <ListView Name="SearchResultList" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Tapped="ItemClickedListView">
+            <ListView.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Symbol" FontSize="20" Width="100" TextAlignment="Left"></TextBlock>
+                    <TextBlock Text="Name"  FontSize="20" Width="250" TextAlignment="Left"></TextBlock>
+                    <TextBlock Text="Price"  FontSize="20" Width="100" TextAlignment="Left"></TextBlock>
+                    <TextBlock Text="Movement"  FontSize="20" Width="200" TextAlignment="Left"></TextBlock>
+                </StackPanel>
+            </ListView.Header>
+        </ListView>
     </Grid>
 </Page>

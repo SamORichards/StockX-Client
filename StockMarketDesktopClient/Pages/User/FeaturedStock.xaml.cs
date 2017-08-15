@@ -1,5 +1,8 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -11,8 +14,21 @@ namespace StockMarketDesktopClient.Pages {
         public FeaturedStock() {
             this.InitializeComponent();
         }
-
-#region HB Menu
+        bool FirstLoad = true;
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            base.OnNavigatedTo(e);
+            if (FirstLoad) {
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                SystemNavigationManager.GetForCurrentView().BackRequested += (s, ev) => {
+                    if (Frame.CanGoBack) {
+                        Frame.GoBack();
+                        ev.Handled = true;
+                    }
+                };
+                FirstLoad = false;
+            }
+        }
+        #region HB Menu
         private void HamburgerButton_Click(object sender, RoutedEventArgs e) {
             if (HB_Menu.IsPaneOpen) {
                 HB_Menu.IsPaneOpen = false;

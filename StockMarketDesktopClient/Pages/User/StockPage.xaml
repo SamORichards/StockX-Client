@@ -5,25 +5,42 @@
     xmlns:local="using:StockMarketDesktopClient.Pages.User"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
+    xmlns:chart="using:Syncfusion.UI.Xaml.Charts"
     mc:Ignorable="d"
     >
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="Stock" Name="StockNameTitle" FontSize="50" Padding="0,25,0,50" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-            <Charting:Chart x:Name="LineChart" HorizontalAlignment="Left" VerticalAlignment="Center" Height="500" Width="1000" Padding="50">
-                <Charting:LineSeries Title="Pricing History" Margin="0" VerticalAlignment="Center" IndependentValuePath="Time" DependentValuePath="Price" IsSelectionEnabled="True"/>
-            </Charting:Chart>
-            <StackPanel Orientation="Vertical">
-                <TextBlock Name="CurrentPriceBlock" Text="Current Price: " FontSize="24"></TextBlock>
-                <TextBlock Name="ChangeInPrice" Text="Change In Price: " FontSize="24"></TextBlock>
-                <TextBlock Name="ChangeInPricePercentage" Text="Current Price: " FontSize="24"></TextBlock>
-                <TextBlock Name="VolumeTradedToday" Text="Volume Traded: " FontSize="24" Padding="0,0,0,50"></TextBlock>
-                <Button Content="Buy" Click="BuyButton" Width="175" Height="75" Background="Green" FontSize="28"></Button>
-                <TextBlock Padding="0,0,0,25"></TextBlock>
-                <Button Content="Sell" Click="SellButton" Width="175" Height="75" Background="Red" FontSize="28"></Button>
-            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                <chart:SfChart x:Name="Line" AreaBorderThickness="0,0.5,0.5,0" VerticalAlignment="Center">
+                    <chart:SfChart.Header>
+                        <TextBlock x:Name="header" FontSize="28" FontFamily="Segoe UI" Margin="0,0,0,20" 
+                                   Text="Price History" />
+                    </chart:SfChart.Header>
+                    <chart:SfChart.PrimaryAxis>
+                        <chart:CategoryAxis x:Name="primaryAxis" 
+                                            Header="Time" FontSize="12" />
+                    </chart:SfChart.PrimaryAxis>
+                    <chart:SfChart.SecondaryAxis>
+                        <chart:NumericalAxis x:Name="secondaryAxis" RangePadding="Round"
+                                             Header="Price" FontSize="12" />
+                    </chart:SfChart.SecondaryAxis>
+                    <chart:LineSeries EnableAnimation="True" ShowTooltip="True" XBindingPath="Time" 
+                                      YBindingPath="Price" ItemsSource="{Binding}">
+                    </chart:LineSeries>
+                </chart:SfChart>
+                <TextBlock Padding="25"></TextBlock>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Name="CurrentPriceBlock" Text="Current Price: " FontSize="24"></TextBlock>
+                    <TextBlock Name="ChangeInPrice" Text="Change In Price: " FontSize="24"></TextBlock>
+                    <TextBlock Name="ChangeInPricePercentage" Text="Current Price: " FontSize="24"></TextBlock>
+                    <TextBlock Name="VolumeTradedToday" Text="Volume Traded: " FontSize="24" Padding="0,0,0,50"></TextBlock>
+                    <Button Content="Add To Watch List" Name="WatchListButton" Click="WatchListClick" Height="75"></Button>
+                    <TextBlock Padding="0,0,0,15"></TextBlock>
+                    <Button Content="Buy" Click="BuyButton" Name="BuyButtonObject" Height="75" Background="Green" FontSize="28"></Button>
+                    <TextBlock Padding="0,0,0,15"></TextBlock>
+                    <Button Content="Sell" Click="SellButton" Name="SellButtonObject" Height="75" Background="Red" FontSize="28"></Button>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -12,7 +12,9 @@ namespace StockMarketDesktopClient.Scripts {
             TextBlock block = new TextBlock();
             block.Text = Text;
             block.TextAlignment = al;
-            block.Width = Width;
+            if (Width != 0) {
+                block.Width = Width;
+            }
             block.FontSize = fontSize;
             return block;
         }

@@ -35,7 +35,7 @@
                 </StackPanel>
             </SplitView.Pane>
             <SplitView.Content>
-                <TextBlock Text="Featured Stock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"></TextBlock>
+                <StackPanel Orientation="Horizontal" Name="panel" Padding="75"></StackPanel>
             </SplitView.Content>
         </SplitView>
     </Grid>

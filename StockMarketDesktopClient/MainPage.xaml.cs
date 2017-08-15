@@ -14,9 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using StockMarketDesktopClient.Scripts;
 using Pomelo.Data.MySql;
-
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using Windows.UI;
 
 namespace StockMarketDesktopClient {
     /// <summary>
@@ -77,22 +75,58 @@ namespace StockMarketDesktopClient {
 
         void OnlineConnector(string Act, string formNick, string formPassword, string email) {
             if (Act == "Login") {
-                 MySqlDataReader reader = DataBaseHandler.GetData("SELECT * FROM Users WHERE Email = '" + email + "'");
+                MySqlDataReader reader = DataBaseHandler.GetData("SELECT * FROM Users WHERE Email = '" + email + "'");
                 string Nickname = "";
-                int UserId = 0;
+                int UserId = -1;
                 string Password = "";
                 while (reader.Read()) {
                     Nickname = (string)reader["Nickname"];
                     UserId = (int)reader["ID"];
                     Password = (string)reader["Password"];
                 }
-                if (Password == formPassword) {
-                    DataBaseHandler.Nickname = Nickname;
+                if (UserId >= 0) {
+                    if (Password == formPassword) {
+                        DataBaseHandler.Nickname = Nickname;
+                        DataBaseHandler.UserID = UserId;
+                        this.Frame.Navigate(typeof(Pages.FeaturedStock));
+                    }
+                }
+            } else {
+                MySqlDataReader reader = DataBaseHandler.GetData("SELECT ID FROM Users WHERE Email = '" + email + "'");
+                int UserId = -1;
+                while (reader.Read()) {
+                    UserId = (int)reader["ID"];
+                }
+                if (UserId == -1) {
+                    DataBaseHandler.SetData(string.Format("INSERT INTO Users(Nickname, Email, Password) VALUES('{0}', '{1}', '{2}')", formNick, email, formPassword));
+                    UserId = DataBaseHandler.GetCount("SELECT SUM(ID) FROM Users WHERE Email = '" + email + "'");
                     DataBaseHandler.UserID = UserId;
-                    this.Frame.Navigate(typeof(Pages.FeaturedStock));                    
+                    this.Frame.Navigate(typeof(Pages.FeaturedStock));
                 }
             }
 
+        }
+
+        private void RegisteredButtonClick(object sender, RoutedEventArgs e) {
+            Buttons.Children.Remove(LoginButton);
+            TextBox box = new TextBox();
+            box.PlaceholderText = "Nickname";
+            box.FontSize = 30;
+            TextBlock text = new TextBlock();
+            text.Text = "Nickname";
+            text.Foreground = new SolidColorBrush(Colors.DeepSkyBlue);
+            text.FontSize = 45;
+            box.Header = text;
+            box.Name = "NicknameField";
+            RegistrationButton.Click -= RegisteredButtonClick;
+            RegistrationButton.Click += CompleteRegistrationClick;
+            StackList.Children.Insert(0,box);
+        }
+
+        private void CompleteRegistrationClick(object sender, RoutedEventArgs e) {
+            if (ValidEmail(EmailBox.Text) && ValidUsernamePassword(PasswordBox.Password) && ValidUsernamePassword((StackList.Children[0] as TextBox).Text)) {
+                OnlineConnector("Registration", (StackList.Children[0] as TextBox).Text, PasswordBox.Password, EmailBox.Text);
+            }
         }
     }
 }
