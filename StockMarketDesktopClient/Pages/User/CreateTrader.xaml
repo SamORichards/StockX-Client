@@ -8,6 +8,6 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Orientation="Horizontal" Name="panel"></StackPanel>
+        <StackPanel Orientation="Horizontal" Name="panel" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="50"></StackPanel>
     </Grid>
 </Page>

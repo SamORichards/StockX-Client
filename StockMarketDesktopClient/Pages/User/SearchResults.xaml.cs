@@ -24,6 +24,17 @@ namespace StockMarketDesktopClient.Pages.User {
     /// <summary> 
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
+
+    public class SearchParams {
+        public string Value;
+        public bool CustomSeach;
+        public SearchParams(string S, bool Custom) {
+            Value = S;
+            CustomSeach = Custom;
+        }
+    }
+
     public sealed partial class SearchResults : Page {
         public SearchResults() {
             this.InitializeComponent();
@@ -31,13 +42,17 @@ namespace StockMarketDesktopClient.Pages.User {
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
-            Search((string)e.Parameter);
+            Search((SearchParams)e.Parameter);
         }
+        
 
-
-
-        public void Search(string DataValue) {
-            MySqlDataReader reader = DataBaseHandler.GetData("SELECT StockName, FullName, CurrentPrice, OpeningPriceToday FROM Stock WHERE FullName LIKE '%" + DataValue + "%' OR StockName LIKE '%" + DataValue + "%'");
+        public void Search(SearchParams DataValue) {
+            MySqlDataReader reader;
+            if (DataValue.CustomSeach) {
+                reader = DataBaseHandler.GetData(DataValue.Value);
+            } else {
+                reader = DataBaseHandler.GetData("SELECT StockName, FullName, CurrentPrice, OpeningPriceToday FROM Stock WHERE FullName LIKE '%" + DataValue + "%' OR StockName LIKE '%" + DataValue + "%'");
+            }
             while (reader.Read()) {
                 string Symbol = (string)reader["StockName"];
                 string FullName = (string)reader["FullName"];
@@ -48,11 +63,15 @@ namespace StockMarketDesktopClient.Pages.User {
                 StackPanel panel = new StackPanel();
                 panel.Orientation = Orientation.Horizontal;
                 panel.Children.Add(Helper.CreateTextBlock(Symbol, TextAlignment.Left, 100, 20));
-                panel.Children.Add(Helper.CreateTextBlock(FullName, TextAlignment.Left, 250, 20));
-                panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + '.' + Price.ToString().Split('.')[1].Substring(0, 4), TextAlignment.Left, 100, 20));
-                TextBlock RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString(), TextAlignment.Left, 100, 20);
+                panel.Children.Add(Helper.CreateTextBlock(FullName, TextAlignment.Left, 350, 20));
+                if (Price.ToString().Contains('.')) {
+                    panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + '.' + Price.ToString().Split('.')[1].Substring(0, 4), TextAlignment.Left, 150, 20));
+                } else {
+                    panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString(), TextAlignment.Left, 150, 20));
+                }
+                TextBlock RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString(), TextAlignment.Left, 125, 20);
                 if (RealChangeInPrice.ToString().Contains('.')) {
-                    RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString().Substring(0, 6), TextAlignment.Left, 100, 20);
+                    RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString().Substring(0, 6), TextAlignment.Left, 125, 20);
                 }
                 if (RealChangeInPrice < 0) {
                     RealChangeInPriceBlock.Foreground = new SolidColorBrush(Colors.Red);

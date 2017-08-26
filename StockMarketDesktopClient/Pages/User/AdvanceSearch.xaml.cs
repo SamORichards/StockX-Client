@@ -21,12 +21,7 @@ namespace StockMarketDesktopClient.Pages.User {
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class AdvanceSearch : Page {
-        public AdvanceSearch() {
-            this.InitializeComponent();
-        }
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
-            base.OnNavigatedTo(e);
-        }
+
         #region HB Menu
         private void HamburgerButton_Click(object sender, RoutedEventArgs e) {
             if (HB_Menu.IsPaneOpen) {
@@ -55,7 +50,39 @@ namespace StockMarketDesktopClient.Pages.User {
         private void AlgoTardingMenuClicked(object sender, RoutedEventArgs e) {
             this.Frame.Navigate(typeof(Pages.User.AlgoTrading));
         }
-    }
-    #endregion
-}
+        #endregion
+        public AdvanceSearch() {
+            this.InitializeComponent();
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            base.OnNavigatedTo(e);
+            PriceOpporator.Items.Add(">");
+            PriceOpporator.Items.Add("<");
+            DailyMovementOpporator.Items.Add(">");
+            DailyMovementOpporator.Items.Add("<");
+        }
 
+        private void SearchButtonClicked(object sender, RoutedEventArgs e) {
+            bool CheckBoxSelected = false;
+            string command = "SELECT StockName, FullName, CurrentPrice, OpeningPriceToday FROM Stock WHERE";
+            if (SearchBoxCheckBox.IsChecked == true && SearchBox.Text.Length > 0) {
+                command += " (FullName LIKE '%" + SearchBox.Text + "%' OR StockName LIKE '%" + SearchBox.Text + "%') AND";
+                CheckBoxSelected = true;
+            }
+            double DailyMovementDouble;
+            if (DailyMovementCheckBox.IsChecked == true && DailyMovementOpporator.SelectedItem != null && double.TryParse(DailyMovementValue.Text, out DailyMovementDouble)) {
+                command += " (CurrentPrice - OpeningPriceToday)/OpeningPriceToday " + DailyMovementOpporator.SelectedItem + " " + DailyMovementDouble + " AND";
+                CheckBoxSelected = true;
+            }
+            double PriceDouble;
+            if (PriceCheckBox.IsChecked == true && PriceOpporator.SelectedItem != null && double.TryParse(PriceValue.Text, out PriceDouble)) {
+                command += " CurrentPrice " + PriceOpporator.SelectedItem + " " + PriceDouble + " AND";
+                CheckBoxSelected = true;
+            }
+            if (CheckBoxSelected) {
+                command = command.Remove(command.Length - 4, 4);
+                this.Frame.Navigate(typeof(Pages.User.SearchResults), new SearchParams(command, true));
+            }
+        }
+    }
+}

@@ -17,9 +17,9 @@
             <ListView.Header>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Symbol" FontSize="20" Width="100" TextAlignment="Left"></TextBlock>
-                    <TextBlock Text="Name"  FontSize="20" Width="250" TextAlignment="Left"></TextBlock>
-                    <TextBlock Text="Price"  FontSize="20" Width="100" TextAlignment="Left"></TextBlock>
-                    <TextBlock Text="Movement"  FontSize="20" Width="200" TextAlignment="Left"></TextBlock>
+                    <TextBlock Text="Name"  FontSize="20" Width="350" TextAlignment="Left"></TextBlock>
+                    <TextBlock Text="Price"  FontSize="20" Width="150" TextAlignment="Left"></TextBlock>
+                    <TextBlock Text="Movement"  FontSize="20" Width="250" TextAlignment="Left"></TextBlock>
                 </StackPanel>
             </ListView.Header>
         </ListView>
