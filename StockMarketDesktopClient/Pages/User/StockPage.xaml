@@ -25,7 +25,7 @@
                         <chart:NumericalAxis x:Name="secondaryAxis" RangePadding="Round"
                                              Header="Price" FontSize="12" />
                     </chart:SfChart.SecondaryAxis>
-                    <chart:LineSeries EnableAnimation="True" ShowTooltip="True" XBindingPath="Time" 
+                    <chart:LineSeries EnableAnimation="True" ShowTooltip="True" XBindingPath="Time" x:Name="LineChart"
                                       YBindingPath="Price" ItemsSource="{Binding}">
                     </chart:LineSeries>
                 </chart:SfChart>

@@ -245,17 +245,18 @@
     <PackageReference Include="Pomelo.Data.MySql">
       <Version>1.0.0</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.SfChart.UWP46">
+      <Version>15.3.0.26</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.UWP">
+      <Version>15.1460.3</Version>
+    </PackageReference>
     <PackageReference Include="WinRTXamlToolkit.Controls.DataVisualization.UWP">
       <Version>2.3.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\Admin\" />
-  </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="Syncfusion Controls for UWP XAML, Version=15.3.0.26">
-      <Name>Syncfusion Controls for UWP XAML</Name>
-    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

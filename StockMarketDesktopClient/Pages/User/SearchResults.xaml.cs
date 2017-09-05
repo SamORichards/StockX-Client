@@ -51,7 +51,7 @@ namespace StockMarketDesktopClient.Pages.User {
             if (DataValue.CustomSeach) {
                 reader = DataBaseHandler.GetData(DataValue.Value);
             } else {
-                reader = DataBaseHandler.GetData("SELECT StockName, FullName, CurrentPrice, OpeningPriceToday FROM Stock WHERE FullName LIKE '%" + DataValue + "%' OR StockName LIKE '%" + DataValue + "%'");
+                reader = DataBaseHandler.GetData("SELECT StockName, FullName, CurrentPrice, OpeningPriceToday FROM Stock WHERE FullName LIKE '%" + DataValue.Value + "%' OR StockName LIKE '%" + DataValue.Value + "%'");
             }
             while (reader.Read()) {
                 string Symbol = (string)reader["StockName"];

@@ -289,12 +289,12 @@ namespace StockMarketDesktopClient.Pages.User {
             }
         }
 
-        private void InventoryItemClicked(object sender, TappedRoutedEventArgs e) {
+        ScreenState screenState = ScreenState.JustLoaded;
+
+        private void InventoryItemTapped(object sender, TappedRoutedEventArgs e) {
             string StockName = (((sender as ListView).SelectedItem as StackPanel).Children[0] as TextBlock).Text;
             this.Frame.Navigate(typeof(Pages.User.StockPage), StockName);
-
         }
-        ScreenState screenState = ScreenState.JustLoaded;
     }
     enum ScreenState { SmallDesktop, BigDesktop, JustLoaded}
 }

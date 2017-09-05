@@ -38,7 +38,7 @@ namespace StockMarketDesktopClient.Pages.User {
             while (reader2.Read()) {
                 stocks.Add((string)reader2["StockName"]);
             }
-            foreach(string s in stocks) { 
+            foreach (string s in stocks) {
                 MySqlDataReader reader = DataBaseHandler.GetData("SELECT StockName, FullName, CurrentPrice, OpeningPriceToday FROM Stock WHERE StockName = '" + s + "'");
                 while (reader.Read()) {
                     string Symbol = s;
@@ -62,7 +62,12 @@ namespace StockMarketDesktopClient.Pages.User {
                         RealChangeInPriceBlock.Foreground = new SolidColorBrush(Colors.Green);
                     }
                     panel.Children.Add(RealChangeInPriceBlock);
-                    TextBlock PercentageChangeBlock = Helper.CreateTextBlock(PercentageChange.ToString().Substring(0, 4) + "%", TextAlignment.Left, 100, 20);
+                    TextBlock PercentageChangeBlock = new TextBlock();
+                    if (PercentageChange.ToString().Contains('.')) {
+                        RealChangeInPriceBlock = Helper.CreateTextBlock(PercentageChange.ToString().Split('.')[0] + "." + PercentageChange.ToString().Split('.')[1].Substring(0, 2) + "%", TextAlignment.Left, 100, 20);
+                    } else {
+                        RealChangeInPriceBlock = Helper.CreateTextBlock(PercentageChange.ToString() + "%", TextAlignment.Left, 100, 20);
+                    }
                     if (RealChangeInPrice < 0) {
                         PercentageChangeBlock.Foreground = new SolidColorBrush(Colors.Red);
                     } else {
@@ -107,7 +112,7 @@ namespace StockMarketDesktopClient.Pages.User {
         private void AlgoTardingMenuClicked(object sender, RoutedEventArgs e) {
             this.Frame.Navigate(typeof(Pages.User.AlgoTrading));
         }
-        
+
     }
     #endregion
 }
