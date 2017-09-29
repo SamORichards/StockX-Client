@@ -50,7 +50,7 @@ namespace StockMarketDesktopClient.Pages.User {
         }
 
         private void LoadPrices() {
-            int QuantityOwned = DataBaseHandler.GetCount("SELECT SUM(Qauntity) From Inventories WHERE StockName = '" + StockName + "' AND UserID = " + DataBaseHandler.UserID);
+            int QuantityOwned = DataBaseHandler.GetCount("SELECT SUM(Quantity) From Inventories WHERE StockName = '" + StockName + "' AND UserID = " + DataBaseHandler.UserID);
             MySqlDataReader reader = DataBaseHandler.GetData("SELECT * FROM Stock WHERE StockName = '" + StockName + "'");
             while (reader.Read()) {
                 string FullName = (string)reader["FullName"];

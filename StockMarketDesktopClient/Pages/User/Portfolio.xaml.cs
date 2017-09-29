@@ -137,16 +137,12 @@ namespace StockMarketDesktopClient.Pages.User {
                 BalanceText.Foreground = new SolidColorBrush(Colors.Green);
             }
             double FundsAvailable = Balance - MoneyInPool;
-            if (FundsAvailable.ToString().Contains('.')) {
-                FundsAvailableText.Text = "  Funds Available: $" + FundsAvailable.ToString().Split('.')[0] + "." + FundsAvailable.ToString().Split('.')[1].Substring(0, 2);
-            } else {
-                FundsAvailableText.Text = "  Funds Available: $" + FundsAvailable;
-            }
+            FundsAvailableText.Text = "  Funds Available: $" + Math.Round(FundsAvailable, 2);
             if (FundsAvailable < 0) {
                 FundsAvailableText.Text = "  Funds Available: $0";
                 FundsAvailableText.Foreground = new SolidColorBrush(Colors.Red);
             }
-            MySqlDataReader reader2 = DataBaseHandler.GetData("SELECT DISTINCT StockName FROM StocksInCirculation WHERE OwnerID = " + DataBaseHandler.UserID);
+            MySqlDataReader reader2 = DataBaseHandler.GetData("SELECT DISTINCT StockName FROM Inventories WHERE UserID = " + DataBaseHandler.UserID);
             List<string> StockNames = new List<string>();
             while (reader2.Read()) {
                 StockNames.Add((string)reader2["StockName"]);
@@ -157,11 +153,7 @@ namespace StockMarketDesktopClient.Pages.User {
                 int QuantityOwner = DataBaseHandler.GetCount("SELECT SUM(Quantity) From Inventories WHERE UserID = " + DataBaseHandler.UserID + " AND " + " StockName = '" + StockNames[i] + "'");
                 InventoryValue += CurrentPrice * (double)QuantityOwner;
             }
-            if (InventoryValue.ToString().Contains('.')) {
-                InventoryValueText.Text = "  Invetory Value: $" + InventoryValue.ToString().Split('.')[0] + "." + InventoryValue.ToString().Split('.')[1].Substring(0, 2);
-            } else {
-                InventoryValueText.Text = "  Invetory Value: $" + InventoryValue;
-            }
+            InventoryValueText.Text = "  Invetory Value: $" + Math.Round(InventoryValue, 2);
         }
 
         private void LoadInventory() {
@@ -194,11 +186,8 @@ namespace StockMarketDesktopClient.Pages.User {
                 Panel.Children.Add(Helper.CreateTextBlock(s, TextAlignment.Left, 100, 20));
                 Panel.Children.Add(Helper.CreateTextBlock(FullName, TextAlignment.Left, 250, 20));
                 Panel.Children.Add(Helper.CreateTextBlock(QuantityOwned.ToString(), TextAlignment.Left, 100, 20));
-                Panel.Children.Add(Helper.CreateTextBlock(CurrentPrice.ToString(), TextAlignment.Left, 200, 20));
-                TextBlock RealChangeInPriceBlock =  Helper.CreateTextBlock(RealChangeInPrice.ToString(), TextAlignment.Left, 100, 20);
-                if (RealChangeInPrice.ToString().Contains('.')) {
-                    RealChangeInPriceBlock = Helper.CreateTextBlock(RealChangeInPrice.ToString().Split('.')[0] + "." + RealChangeInPrice.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 100, 20);
-                }
+                Panel.Children.Add(Helper.CreateTextBlock(Math.Round(CurrentPrice, 2).ToString(), TextAlignment.Left, 200, 20));
+                TextBlock RealChangeInPriceBlock = Helper.CreateTextBlock(Math.Round(RealChangeInPrice, 2).ToString(), TextAlignment.Left, 100, 20);
                 if (RealChangeInPrice < 0) {
                     RealChangeInPriceBlock.Foreground = new SolidColorBrush(Colors.Red);
                 } else {
@@ -206,21 +195,14 @@ namespace StockMarketDesktopClient.Pages.User {
                 }
                 Panel.Children.Add(RealChangeInPriceBlock);
 
-                TextBlock PercentageChangeBlock = Helper.CreateTextBlock(PercentageChange.ToString() + "%", TextAlignment.Left, 100, 20);
-                if (PercentageChange.ToString().Contains('.')){
-                    PercentageChangeBlock = Helper.CreateTextBlock(PercentageChange.ToString().Split('.')[0] + "." + PercentageChange.ToString().Split('.')[1].Substring(0, 2) + "%", TextAlignment.Left, 100, 20);
-                }
+                TextBlock PercentageChangeBlock = Helper.CreateTextBlock(Math.Round(PercentageChange, 2) + "%", TextAlignment.Left, 100, 20);
                 if (RealChangeInPrice < 0) {
                     PercentageChangeBlock.Foreground = new SolidColorBrush(Colors.Red);
                 } else {
                     PercentageChangeBlock.Foreground = new SolidColorBrush(Colors.Green);
                 }
                 Panel.Children.Add(PercentageChangeBlock);
-                string ProfitString = Profit.ToString();
-                if (Profit.ToString().Contains('.')) {
-                    ProfitString = Profit.ToString().Split('.')[0] + "." + Profit.ToString().Split('.')[1].Substring(0, 2);
-                }
-                Panel.Children.Add(Helper.CreateTextBlock(ProfitString, TextAlignment.Left, 200, 20));
+                Panel.Children.Add(Helper.CreateTextBlock(Math.Round(Profit, 2).ToString(), TextAlignment.Left, 200, 20));
                 InventoryList.Items.Add(Panel);
             }
         }
@@ -301,6 +283,6 @@ namespace StockMarketDesktopClient.Pages.User {
             this.Frame.Navigate(typeof(Pages.User.StockPage), StockName);
         }
     }
-    enum ScreenState { SmallDesktop, BigDesktop, JustLoaded}
+    enum ScreenState { SmallDesktop, BigDesktop, JustLoaded }
 }
 
