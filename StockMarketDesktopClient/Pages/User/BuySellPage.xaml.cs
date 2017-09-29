@@ -38,15 +38,19 @@ namespace StockMarketDesktopClient.Pages.User {
             if (bidOffer == BidOffer.offer) {
                 BuySellButton.Background = new SolidColorBrush(Colors.Red);
                 BuySellButton.Content = "Sell";
+                int QuantityOwned = DataBaseHandler.GetCount("SELECT SUM(Quantity) From Inventories WHERE StockName = '" + StockName + "' AND UserID = " + DataBaseHandler.UserID);
+                int AlreadySelling = DataBaseHandler.GetCount("SELECT SUM(Quantity) FROM Pool WHERE Type = 1 AND User = " + DataBaseHandler.UserID);
+                FundsAvailableBlock.Text = "Available To Sell: " + (QuantityOwned - AlreadySelling);
+            } else {
+                double Balance = DataBaseHandler.GetCountDouble("SELECT SUM(Balance) FROM Users WHERE ID = " + DataBaseHandler.UserID);
+                MySqlDataReader reader = DataBaseHandler.GetData("SELECT Price, Quantity FROM Pool WHERE Type = 0 AND User = " + DataBaseHandler.UserID);
+                double MoneyInPool = 0;
+                while (reader.Read()) {
+                    MoneyInPool += (double)reader["Price"] * (int)reader["Quantity"];
+                }
+                double FundsAvailable = Balance - MoneyInPool;
+                FundsAvailableBlock.Text = "Funds Available: " + Math.Round(FundsAvailable, 2);
             }
-            double Balance = DataBaseHandler.GetCountDouble("SELECT SUM(Balance) FROM Users WHERE ID = " + DataBaseHandler.UserID);
-            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Price, Quantity FROM Pool WHERE Type = 0 AND User = " + DataBaseHandler.UserID);
-            double MoneyInPool = 0;
-            while (reader.Read()) {
-                MoneyInPool += (double)reader["Price"] * (int)reader["Quantity"];
-            }
-            double FundsAvailable = Balance - MoneyInPool;
-            FundsAvailableBlock.Text = "Funds Available: " + FundsAvailable.ToString().Split('.')[0] + "." + FundsAvailable.ToString().Split('.')[1].Substring(0, 4);
         }
 
         private void BuySellButtonClicked(object sender, RoutedEventArgs e) {
@@ -64,15 +68,16 @@ namespace StockMarketDesktopClient.Pages.User {
                         double FundsAvailable = Balance - MoneyInPool;
                         int CanAfford = (int)(FundsAvailable / Price);
                         if (Quantity > CanAfford) { Quantity = CanAfford; };
-                        DataBaseHandler.SetData(string.Format("INSERT INTO Pool (Type, Price, User, StockName, Quantity) VALUES ({0}, {1}, {2}, '{3}', {4})", (int)bidOffer, Price, DataBaseHandler.UserID, StockName, Quantity));
+                        DataBaseHandler.SetData(string.Format("INSERT INTO Pool (Type, Price, User, StockName, Quantity) VALUES ({0}, {1}, {2}, '{3}', {4})", (int)bidOffer, Math.Round(Price, 2), DataBaseHandler.UserID, StockName, Quantity));
                         this.Frame.Navigate(typeof(Pages.User.Portfolio));
                         break;
                     case BidOffer.offer:
-                        int Owned = DataBaseHandler.GetCount("SELECT COUNT(StockID) FROM StocksInCirculation WHERE OwnerID = " + DataBaseHandler.UserID);
-                        int AlreadySelling = DataBaseHandler.GetCount("SELECT SUM(Quantity) FROM Pool WHERE Type = 1 AND User = " + DataBaseHandler.UserID);
-                        int CanSell = Owned - AlreadySelling;
+                        int QuantityOwned = DataBaseHandler.GetCount("SELECT COUNT(StockID) From StocksInCirculation WHERE StockName = '" + StockName + "' AND OwnerID = " + DataBaseHandler.UserID);
+                        int AlreadySelling = DataBaseHandler.GetCount("SELECT SUM(Quantity) FROM Pool WHERE Type = 1 AND User = " + DataBaseHandler.UserID + " AND StockName = '" + StockName + "'");
+                        int CanSell = QuantityOwned - AlreadySelling;
                         if (Quantity > CanSell) { Quantity = CanSell; }
-                        DataBaseHandler.SetData(string.Format("INSERT INTO Pool (Type, Price, User, StockName, Quantity) VALUES ({0}, {1}, {2}, '{3}', {4})", (int)bidOffer, Price, DataBaseHandler.UserID, StockName, Quantity));
+                        DataBaseHandler.SetData(string.Format("INSERT INTO Pool (Type, Price, User, StockName, Quantity) VALUES ({0}, {1}, {2}, '{3}', {4})", (int)bidOffer, Math.Round(Price, 2), DataBaseHandler.UserID, StockName, Quantity));
+                        this.Frame.Navigate(typeof(Pages.User.Portfolio));
                         break;
                 }
             } else {

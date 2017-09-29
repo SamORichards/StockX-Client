@@ -38,17 +38,13 @@
                 <StackPanel Padding="50">
                     <TextBlock Text="Advance Search" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Padding="0,0,0,50"></TextBlock>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <CheckBox Name="SearchBoxCheckBox" IsChecked="True"></CheckBox>
+                        <CheckBox Name="SearchBoxCheckBox" IsChecked="True" Margin="0,0,-90,0"></CheckBox>
                         <TextBox Name="SearchBox" PlaceholderText="Search" FontSize="35" Padding="5,5,750,5"></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Padding="50" HorizontalAlignment="Center">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" Padding="0,0,0,10">
-                                <CheckBox VerticalAlignment="Top" Name="PriceCheckBox" HorizontalAlignment="Center" Height="9" RenderTransformOrigin="0.5,0.5" Width="29">
-                                    <CheckBox.RenderTransform>
-                                        <CompositeTransform ScaleX="-1"/>
-                                    </CheckBox.RenderTransform>
-                                </CheckBox>
+                                <CheckBox VerticalAlignment="Top" Name="PriceCheckBox" HorizontalAlignment="Center" Margin="0,0,-90,0"></CheckBox>
                                 <TextBlock VerticalAlignment="Center" Text="Price" FontSize="20" Padding="5,0,10,0"></TextBlock>
                                 <ComboBox Name="PriceOpporator"></ComboBox>
                                 <TextBlock Text="$" Padding="10,0,0,0" VerticalAlignment="Center" FontSize="20"></TextBlock>
@@ -56,35 +52,14 @@
                                 <TextBlock Text="" FontSize="20" VerticalAlignment="Center"></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Padding="0,0,0,10">
-                                <CheckBox VerticalAlignment="Top" Name="DailyMovementCheckBox" HorizontalAlignment="Center" Height="9" RenderTransformOrigin="0.5,0.5" Width="29">
-                                    <CheckBox.RenderTransform>
-                                        <CompositeTransform ScaleX="-1"/>
-                                    </CheckBox.RenderTransform>
-                                </CheckBox>
+                                <CheckBox VerticalAlignment="Top" Name="DailyMovementCheckBox" HorizontalAlignment="Center" Margin="0,0,-90,0"></CheckBox>
                                 <TextBlock VerticalAlignment="Center" Text="Daily Movement" FontSize="20" Padding="5,0,10,0"></TextBlock>
                                 <ComboBox Name="DailyMovementOpporator"></ComboBox>
                                 <TextBlock Text="" Padding="10,0,0,0" VerticalAlignment="Center" FontSize="20"></TextBlock>
                                 <TextBox PlaceholderText="Pecentage" Name="DailyMovementValue"></TextBox>
-                                <TextBlock Text="%" FontSize="20" VerticalAlignment="Center"></TextBlock>
+                                <TextBlock Text=" %" FontSize="20" VerticalAlignment="Center"></TextBlock>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" Padding=" 0,0,0,10">
-                                <CheckBox VerticalAlignment="Top" HorizontalAlignment="Center" Height="9" RenderTransformOrigin="0.5,0.5" Width="29">
-                                    <CheckBox.RenderTransform>
-                                        <CompositeTransform ScaleX="-1"/>
-                                    </CheckBox.RenderTransform>
-                                </CheckBox>
-                                <TextBlock Text="Daily Movement" Padding="5,0,0,0"></TextBlock>
-                                <ComboBox></ComboBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Padding="0,0,0,10">
-                                <CheckBox VerticalAlignment="Top" HorizontalAlignment="Center" Height="9" RenderTransformOrigin="0.5,0.5" Width="29">
-                                    <CheckBox.RenderTransform>
-                                        <CompositeTransform ScaleX="-1"/>
-                                    </CheckBox.RenderTransform>
-                                </CheckBox>
-                                <TextBlock Text="Daily Movement" Padding="5,0,0,0"></TextBlock>
-                                <ComboBox></ComboBox>
-                            </StackPanel>
+                            
                         </StackPanel>
                         <Button Content="Search" Click="SearchButtonClicked" Background="DeepSkyBlue" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Width="250" Height="88" Style="{StaticResource ButtonStyle1}"  ></Button>
                     </StackPanel>

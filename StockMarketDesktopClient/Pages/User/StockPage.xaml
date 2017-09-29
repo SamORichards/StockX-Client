@@ -12,23 +12,26 @@
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="Stock" Name="StockNameTitle" FontSize="50" Padding="0,25,0,50" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-                <chart:SfChart x:Name="Line" AreaBorderThickness="0,0.5,0.5,0" VerticalAlignment="Center">
-                    <chart:SfChart.Header>
-                        <TextBlock x:Name="header" FontSize="28" FontFamily="Segoe UI" Margin="0,0,0,20" 
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Name="DescriptionText"></TextBlock>
+                    <chart:SfChart x:Name="Line" AreaBorderThickness="0,0.5,0.5,0" VerticalAlignment="Center">
+                        <chart:SfChart.Header>
+                            <TextBlock x:Name="header" FontSize="28" FontFamily="Segoe UI" Margin="0,0,0,20" 
                                    Text="Price History" />
-                    </chart:SfChart.Header>
-                    <chart:SfChart.PrimaryAxis>
-                        <chart:CategoryAxis x:Name="primaryAxis" 
+                        </chart:SfChart.Header>
+                        <chart:SfChart.PrimaryAxis>
+                            <chart:CategoryAxis x:Name="primaryAxis" 
                                             Header="Time" FontSize="12" />
-                    </chart:SfChart.PrimaryAxis>
-                    <chart:SfChart.SecondaryAxis>
-                        <chart:NumericalAxis x:Name="secondaryAxis" RangePadding="Round"
+                        </chart:SfChart.PrimaryAxis>
+                        <chart:SfChart.SecondaryAxis>
+                            <chart:NumericalAxis x:Name="secondaryAxis" RangePadding="Round"
                                              Header="Price" FontSize="12" />
-                    </chart:SfChart.SecondaryAxis>
-                    <chart:LineSeries EnableAnimation="True" ShowTooltip="True" XBindingPath="Time" x:Name="LineChart"
+                        </chart:SfChart.SecondaryAxis>
+                        <chart:LineSeries EnableAnimation="True" ShowTooltip="True" XBindingPath="Time" x:Name="LineChart"
                                       YBindingPath="Price" ItemsSource="{Binding}">
-                    </chart:LineSeries>
-                </chart:SfChart>
+                        </chart:LineSeries>
+                    </chart:SfChart>
+                </StackPanel>
                 <TextBlock Padding="25"></TextBlock>
                 <StackPanel Orientation="Vertical">
                     <TextBlock Name="CurrentPriceBlock" Text="Current Price: " FontSize="24"></TextBlock>

@@ -154,7 +154,7 @@ namespace StockMarketDesktopClient.Pages.User {
             double InventoryValue = 0.00d;
             for (int i = 0; i < StockNames.Count; i++) {
                 double CurrentPrice = DataBaseHandler.GetCountDouble("SELECT SUM(CurrentPrice) FROM Stock WHERE StockName = '" + StockNames[i] + "'");
-                int QuantityOwner = DataBaseHandler.GetCount("SELECT Count(StockID) From StocksInCirculation WHERE OwnerID = " + DataBaseHandler.UserID + " AND " + " StockName = '" + StockNames[i] + "'");
+                int QuantityOwner = DataBaseHandler.GetCount("SELECT SUM(Quantity) From Inventories WHERE UserID = " + DataBaseHandler.UserID + " AND " + " StockName = '" + StockNames[i] + "'");
                 InventoryValue += CurrentPrice * (double)QuantityOwner;
             }
             if (InventoryValue.ToString().Contains('.')) {
@@ -166,7 +166,7 @@ namespace StockMarketDesktopClient.Pages.User {
 
         private void LoadInventory() {
             InventoryList.Items.Clear();
-            MySqlDataReader reader = DataBaseHandler.GetData("SELECT DISTINCT StockName FROM StocksInCirculation WHERE OwnerID = " + DataBaseHandler.UserID);
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT DISTINCT StockName FROM Inventories WHERE Quantity > 0 AND UserID = " + DataBaseHandler.UserID);
             List<string> StockNames = new List<string>();
             while (reader.Read()) {
                 StockNames.Add((string)reader["StockName"]);
@@ -175,8 +175,8 @@ namespace StockMarketDesktopClient.Pages.User {
                 Console.WriteLine(i);
                 string s = StockNames[i];
                 string FullName = "";
-                int QuanityOwned = DataBaseHandler.GetCount("SELECT COUNT(StockID) From StocksInCirculation WHERE StockName = '" + s + "' AND OwnerID = " + DataBaseHandler.UserID);
-                double AverageCost = DataBaseHandler.GetCountDouble("SELECT AVG(LastTradedPrice) From StocksInCirculation WHERE StockName = '" + s + "' AND OwnerID = " + DataBaseHandler.UserID);
+                int QuantityOwned = DataBaseHandler.GetCount("SELECT SUM(Quantity) From Inventories WHERE StockName = '" + s + "' AND UserID = " + DataBaseHandler.UserID);
+                double AverageCost = DataBaseHandler.GetCountDouble("SELECT AVG(LastTradedPrice) From Inventories WHERE StockName = '" + s + "' AND UserID = " + DataBaseHandler.UserID);
                 double CurrentPrice = 0, OpeningPrice = 0, High, Low;
                 MySqlDataReader StockReader = DataBaseHandler.GetData("SELECT * FROM Stock WHERE StockName = '" + s + "'");
                 while (StockReader.Read()) {
@@ -193,6 +193,7 @@ namespace StockMarketDesktopClient.Pages.User {
                 Panel.Orientation = Orientation.Horizontal;
                 Panel.Children.Add(Helper.CreateTextBlock(s, TextAlignment.Left, 100, 20));
                 Panel.Children.Add(Helper.CreateTextBlock(FullName, TextAlignment.Left, 250, 20));
+                Panel.Children.Add(Helper.CreateTextBlock(QuantityOwned.ToString(), TextAlignment.Left, 100, 20));
                 Panel.Children.Add(Helper.CreateTextBlock(CurrentPrice.ToString(), TextAlignment.Left, 200, 20));
                 TextBlock RealChangeInPriceBlock =  Helper.CreateTextBlock(RealChangeInPrice.ToString(), TextAlignment.Left, 100, 20);
                 if (RealChangeInPrice.ToString().Contains('.')) {
@@ -215,7 +216,11 @@ namespace StockMarketDesktopClient.Pages.User {
                     PercentageChangeBlock.Foreground = new SolidColorBrush(Colors.Green);
                 }
                 Panel.Children.Add(PercentageChangeBlock);
-                Panel.Children.Add(Helper.CreateTextBlock(Profit.ToString(), TextAlignment.Left, 200, 20));
+                string ProfitString = Profit.ToString();
+                if (Profit.ToString().Contains('.')) {
+                    ProfitString = Profit.ToString().Split('.')[0] + "." + Profit.ToString().Split('.')[1].Substring(0, 2);
+                }
+                Panel.Children.Add(Helper.CreateTextBlock(ProfitString, TextAlignment.Left, 200, 20));
                 InventoryList.Items.Add(Panel);
             }
         }
@@ -230,8 +235,8 @@ namespace StockMarketDesktopClient.Pages.User {
                 }
                 foreach (StackPanel panel in InventoryList.Items) {
                     foreach (TextBlock block in panel.Children) {
-                        block.FontSize = block.FontSize / 1.5;
-                        block.Width = block.Width / 1.5;
+                        block.FontSize = block.FontSize / 1.75;
+                        block.Width = block.Width / 1.75;
                     }
                 }
                 foreach (TextBlock block in (TradeList.Header as StackPanel).Children) {
@@ -291,7 +296,7 @@ namespace StockMarketDesktopClient.Pages.User {
 
         ScreenState screenState = ScreenState.JustLoaded;
 
-        private void InventoryItemTapped(object sender, TappedRoutedEventArgs e) {
+        private void InventoryItemPressed(object sender, TappedRoutedEventArgs e) {
             string StockName = (((sender as ListView).SelectedItem as StackPanel).Children[0] as TextBlock).Text;
             this.Frame.Navigate(typeof(Pages.User.StockPage), StockName);
         }

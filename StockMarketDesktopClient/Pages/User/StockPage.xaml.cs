@@ -50,20 +50,23 @@ namespace StockMarketDesktopClient.Pages.User {
         }
 
         private void LoadPrices() {
-            MySqlDataReader reader = DataBaseHandler.GetData("SELECT FullName, CurrentPrice, OpeningPriceToday, VolumeTraded FROM Stock WHERE StockName = '" + StockName + "'");
+            int QuantityOwned = DataBaseHandler.GetCount("SELECT SUM(Qauntity) From Inventories WHERE StockName = '" + StockName + "' AND UserID = " + DataBaseHandler.UserID);
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT * FROM Stock WHERE StockName = '" + StockName + "'");
             while (reader.Read()) {
                 string FullName = (string)reader["FullName"];
                 double Price = (double)reader["CurrentPrice"];
+                string Description = (string)reader["Description"];
                 double OpeningPrice = (double)reader["OpeningPriceToday"];
                 double RealChangeInPrice = Price - OpeningPrice;
                 double PercentageChange = RealChangeInPrice / OpeningPrice;
                 int VolumeTraded = (int)reader["VolumeTraded"];
                 StockNameTitle.Text = FullName;
+                DescriptionText.Text = Description;
                 if (RealChangeInPrice != 0) {
                     ChangeInPricePercentage.Text = "Change In Price: " + PercentageChange.ToString().Split('.')[0] + "." + PercentageChange.ToString().Split('.')[1].Substring(0, 4) + "%";
-                    ChangeInPrice.Text = "Change In Price: " + RealChangeInPrice.ToString().Split('.')[0] + "." + RealChangeInPrice.ToString().Split('.')[1].Substring(0, 4) + "%";
+                    ChangeInPrice.Text = "Change In Price: " + RealChangeInPrice.ToString().Split('.')[0] + "." + RealChangeInPrice.ToString().Split('.')[1].Substring(0, 4);
                 } else {
-                    ChangeInPrice.Text = "Change In Price: 0.00%";
+                    ChangeInPrice.Text = "Change In Price: 0.00";
                     ChangeInPricePercentage.Text = "Change In Price: 0.00%";
                 }
                 if (RealChangeInPrice < 0) {
@@ -75,29 +78,32 @@ namespace StockMarketDesktopClient.Pages.User {
                 }
                 CurrentPriceBlock.Text = "Current Price: " + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 4);
                 VolumeTradedToday.Text = "Volume Traded: " + VolumeTraded.ToString();
+                if (QuantityOwned > 0) {
+                    VolumeTradedToday.Text += "\nStock Owned: " + QuantityOwned;
+                }
                 SellButtonObject.Width = 250;
                 BuyButtonObject.Width = SellButtonObject.Width;
                 WatchListButton.Width = SellButtonObject.Width;
             }
         }
-        public class test {
-            public ObservableCollection<PriceHis> PriceHistory {get; set;}
-            public test() {
+        public class PriceChartList {
+            public ObservableCollection<PriceHis> PriceHistory { get; set; }
+            public PriceChartList() {
                 PriceHistory = new ObservableCollection<PriceHis>();
             }
         }
 
         private void LoadChart() {
             MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, Price FROM PricingHistory WHERE StockName = '" + StockName + "' LIMIT 20");
-            test Test = new test();
-            ViewModel = new ObservableCollection<test>();
+            PriceChartList Test = new PriceChartList();
+            ViewModel = new ObservableCollection<PriceChartList>();
             while (reader.Read()) {
                 Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
             }
             ViewModel.Add(Test);
             Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
         }
-        public ObservableCollection<test> ViewModel { get; set; }
+        public ObservableCollection<PriceChartList> ViewModel { get; set; }
 
         private void SellButton(object sender, RoutedEventArgs e) {
             this.Frame.Navigate(typeof(Pages.User.BuySellPage), StockName + "/" + (int)BidOffer.offer);
