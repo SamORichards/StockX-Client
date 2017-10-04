@@ -87,7 +87,7 @@ namespace StockMarketDesktopClient.Pages.User {
                     Panel.Children.Add(Helper.CreateTextBlock("Offer", TextAlignment.Left, 55, 20));
                 }
                 Panel.Children.Add(Helper.CreateTextBlock(StockName, TextAlignment.Left, 80, 20));
-                Panel.Children.Add(Helper.CreateTextBlock("$" + Price.ToString().Split('.')[0] + "." + Price.ToString().Split('.')[1].Substring(0, 2), TextAlignment.Left, 75, 20));
+                Panel.Children.Add(Helper.CreateTextBlock("$" + Math.Round(Price, 2), TextAlignment.Left, 75, 20));
                 Panel.Children.Add(Helper.CreateTextBlock(Quantity.ToString(), TextAlignment.Left, 148, 20));
                 TradeList.Items.Add(Panel);
             }
@@ -126,11 +126,7 @@ namespace StockMarketDesktopClient.Pages.User {
             while (reader.Read()) {
                 MoneyInPool += (double)reader["Price"] * (int)reader["Quantity"];
             }
-            if (Balance.ToString().Contains('.')) {
-                BalanceText.Text = "Balance: $" + Balance.ToString().Split('.')[0] + "." + Balance.ToString().Split('.')[1].Substring(0, 2);
-            } else {
-                BalanceText.Text = "Balance: $" + Balance.ToString();
-            }
+                BalanceText.Text = "Balance: $" + Math.Round(Balance, 2);
             if (Balance < 0) {
                 BalanceText.Foreground = new SolidColorBrush(Colors.Red);
             } else {
@@ -186,7 +182,7 @@ namespace StockMarketDesktopClient.Pages.User {
                 Panel.Children.Add(Helper.CreateTextBlock(s, TextAlignment.Left, 100, 20));
                 Panel.Children.Add(Helper.CreateTextBlock(FullName, TextAlignment.Left, 250, 20));
                 Panel.Children.Add(Helper.CreateTextBlock(QuantityOwned.ToString(), TextAlignment.Left, 100, 20));
-                Panel.Children.Add(Helper.CreateTextBlock(Math.Round(CurrentPrice, 2).ToString(), TextAlignment.Left, 200, 20));
+                Panel.Children.Add(Helper.CreateTextBlock(Math.Round(CurrentPrice, 2).ToString(), TextAlignment.Left, 125, 20));
                 TextBlock RealChangeInPriceBlock = Helper.CreateTextBlock(Math.Round(RealChangeInPrice, 2).ToString(), TextAlignment.Left, 100, 20);
                 if (RealChangeInPrice < 0) {
                     RealChangeInPriceBlock.Foreground = new SolidColorBrush(Colors.Red);

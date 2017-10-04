@@ -72,7 +72,7 @@ namespace StockMarketDesktopClient.Pages.User {
                         this.Frame.Navigate(typeof(Pages.User.Portfolio));
                         break;
                     case BidOffer.offer:
-                        int QuantityOwned = DataBaseHandler.GetCount("SELECT COUNT(StockID) From StocksInCirculation WHERE StockName = '" + StockName + "' AND OwnerID = " + DataBaseHandler.UserID);
+                        int QuantityOwned = DataBaseHandler.GetCount("SELECT SUM(Quantity) From Inventories WHERE StockName = '" + StockName + "' AND UserID = " + DataBaseHandler.UserID);
                         int AlreadySelling = DataBaseHandler.GetCount("SELECT SUM(Quantity) FROM Pool WHERE Type = 1 AND User = " + DataBaseHandler.UserID + " AND StockName = '" + StockName + "'");
                         int CanSell = QuantityOwned - AlreadySelling;
                         if (Quantity > CanSell) { Quantity = CanSell; }

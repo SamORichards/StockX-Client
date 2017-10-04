@@ -94,7 +94,7 @@ namespace StockMarketDesktopClient.Pages.User {
         }
 
         private void LoadChart() {
-            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, Price FROM PricingHistory WHERE StockName = '" + StockName + "' LIMIT 20");
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, Price FROM PricingHistory WHERE StockName = '" + StockName + "' LIMIT 1000");
             PriceChartList Test = new PriceChartList();
             ViewModel = new ObservableCollection<PriceChartList>();
             while (reader.Read()) {
