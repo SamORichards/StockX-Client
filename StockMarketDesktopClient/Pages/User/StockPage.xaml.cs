@@ -122,5 +122,82 @@ namespace StockMarketDesktopClient.Pages.User {
                 WatchListButton.Content = "Add To Watch List";
             }
         }
+
+        private void AllTimeClick(object sender, RoutedEventArgs e) {
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, Price FROM PricingHistory WHERE StockName = '" + StockName + "'");
+            PriceChartList Test = new PriceChartList();
+            ViewModel = new ObservableCollection<PriceChartList>();
+            while (reader.Read()) {
+                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+            }
+            ViewModel.Add(Test);
+            Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
+        }
+
+        private void MonthClick(object sender, RoutedEventArgs e) {
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, Price FROM PricingHistory WHERE StockName = '" + StockName + "' AND Time > '" + DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd HH:mm:ss") + "'");
+            PriceChartList Test = new PriceChartList();
+            ViewModel = new ObservableCollection<PriceChartList>();
+            while (reader.Read()) {
+                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+            }
+            ViewModel.Add(Test);
+            Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
+        }
+
+        private void WeekClick(object sender, RoutedEventArgs e) {
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, Price FROM PricingHistory WHERE StockName = '" + StockName + "' AND Time > '" + DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd HH:mm:ss") + "'");
+            PriceChartList Test = new PriceChartList();
+            ViewModel = new ObservableCollection<PriceChartList>();
+            while (reader.Read()) {
+                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+            }
+            ViewModel.Add(Test);
+            Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
+        }
+
+        private void DayClick(object sender, RoutedEventArgs e) {
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, Price FROM PricingHistory WHERE StockName = '" + StockName + "' AND Time > '" + DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd HH:mm:ss") + "'");
+            PriceChartList Test = new PriceChartList();
+            ViewModel = new ObservableCollection<PriceChartList>();
+            while (reader.Read()) {
+                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+            }
+            ViewModel.Add(Test);
+            Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
+        }
+
+        private void TwelveClick(object sender, RoutedEventArgs e) {
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, Price FROM PricingHistory WHERE StockName = '" + StockName + "' AND Time > '" + DateTime.Now.AddHours(-12).ToString("yyyy-MM-dd HH:mm:ss") + "'");
+            PriceChartList Test = new PriceChartList();
+            ViewModel = new ObservableCollection<PriceChartList>();
+            while (reader.Read()) {
+                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+            }
+            ViewModel.Add(Test);
+            Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
+        }
+
+        private void HourClick(object sender, RoutedEventArgs e) {
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, Price FROM PricingHistory WHERE StockName = '" + StockName + "' AND Time > '" + DateTime.Now.AddHours(-1).ToString("yyyy-MM-dd HH:mm:ss") + "'");
+            PriceChartList Test = new PriceChartList();
+            ViewModel = new ObservableCollection<PriceChartList>();
+            while (reader.Read()) {
+                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+            }
+            ViewModel.Add(Test);
+            Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
+        }
+
+        private void TenClick(object sender, RoutedEventArgs e) {
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, Price FROM PricingHistory WHERE StockName = '" + StockName + "' AND Time > '" + DateTime.Now.AddMinutes(-10).ToString("yyyy-MM-dd HH:mm:ss") + "'");
+            PriceChartList Test = new PriceChartList();
+            ViewModel = new ObservableCollection<PriceChartList>();
+            while (reader.Read()) {
+                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+            }
+            ViewModel.Add(Test);
+            Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
+        }
     }
 }
