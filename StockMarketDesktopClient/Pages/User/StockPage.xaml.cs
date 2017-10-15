@@ -26,7 +26,7 @@ namespace StockMarketDesktopClient.Pages.User {
     /// </summary>
     /// 
     public class PriceHis {
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
         public double Price { get; set; }
     }
     public sealed partial class StockPage : Page {
@@ -94,15 +94,9 @@ namespace StockMarketDesktopClient.Pages.User {
         }
 
         private void LoadChart() {
-            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, Price FROM PricingHistory WHERE StockName = '" + StockName + "' LIMIT 1000");
-            PriceChartList Test = new PriceChartList();
-            ViewModel = new ObservableCollection<PriceChartList>();
-            while (reader.Read()) {
-                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
-            }
-            ViewModel.Add(Test);
-            Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
+            TenClick(null, null);
         }
+
         public ObservableCollection<PriceChartList> ViewModel { get; set; }
 
         private void SellButton(object sender, RoutedEventArgs e) {
@@ -128,7 +122,7 @@ namespace StockMarketDesktopClient.Pages.User {
             PriceChartList Test = new PriceChartList();
             ViewModel = new ObservableCollection<PriceChartList>();
             while (reader.Read()) {
-                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+                Test.PriceHistory.Add(new PriceHis() { Time = (DateTime)reader["Time"], Price = (double)reader["Price"] });
             }
             ViewModel.Add(Test);
             Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
@@ -139,8 +133,10 @@ namespace StockMarketDesktopClient.Pages.User {
             PriceChartList Test = new PriceChartList();
             ViewModel = new ObservableCollection<PriceChartList>();
             while (reader.Read()) {
-                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+                Test.PriceHistory.Add(new PriceHis() { Time = (DateTime)reader["Time"], Price = (double)reader["Price"] });
             }
+            TimeSpan gap = new TimeSpan(6, 0, 0);
+            Test.PriceHistory = PricingThinner(Test.PriceHistory, gap);
             ViewModel.Add(Test);
             Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
         }
@@ -150,8 +146,10 @@ namespace StockMarketDesktopClient.Pages.User {
             PriceChartList Test = new PriceChartList();
             ViewModel = new ObservableCollection<PriceChartList>();
             while (reader.Read()) {
-                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+                Test.PriceHistory.Add(new PriceHis() { Time = (DateTime)reader["Time"], Price = (double)reader["Price"] });
             }
+            TimeSpan gap = new TimeSpan(1, 0, 0);
+            Test.PriceHistory = PricingThinner(Test.PriceHistory, gap);
             ViewModel.Add(Test);
             Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
         }
@@ -161,8 +159,10 @@ namespace StockMarketDesktopClient.Pages.User {
             PriceChartList Test = new PriceChartList();
             ViewModel = new ObservableCollection<PriceChartList>();
             while (reader.Read()) {
-                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+                Test.PriceHistory.Add(new PriceHis() { Time = (DateTime)reader["Time"], Price = (double)reader["Price"] });
             }
+            TimeSpan gap = new TimeSpan(0, 10, 0);
+            Test.PriceHistory = PricingThinner(Test.PriceHistory, gap);
             ViewModel.Add(Test);
             Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
         }
@@ -172,8 +172,10 @@ namespace StockMarketDesktopClient.Pages.User {
             PriceChartList Test = new PriceChartList();
             ViewModel = new ObservableCollection<PriceChartList>();
             while (reader.Read()) {
-                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+                Test.PriceHistory.Add(new PriceHis() { Time = (DateTime)reader["Time"], Price = (double)reader["Price"] });
             }
+            TimeSpan gap = new TimeSpan(0, 2, 0);
+            Test.PriceHistory = PricingThinner(Test.PriceHistory, gap);
             ViewModel.Add(Test);
             Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
         }
@@ -183,8 +185,10 @@ namespace StockMarketDesktopClient.Pages.User {
             PriceChartList Test = new PriceChartList();
             ViewModel = new ObservableCollection<PriceChartList>();
             while (reader.Read()) {
-                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+                Test.PriceHistory.Add(new PriceHis() { Time = (DateTime)reader["Time"], Price = (double)reader["Price"] });
             }
+            TimeSpan gap = new TimeSpan(0, 0, 10);
+            Test.PriceHistory = PricingThinner(Test.PriceHistory, gap);
             ViewModel.Add(Test);
             Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
         }
@@ -194,10 +198,30 @@ namespace StockMarketDesktopClient.Pages.User {
             PriceChartList Test = new PriceChartList();
             ViewModel = new ObservableCollection<PriceChartList>();
             while (reader.Read()) {
-                Test.PriceHistory.Add(new PriceHis() { Time = ((DateTime)reader["Time"]).ToString().Split(' ')[1], Price = (double)reader["Price"] });
+                Test.PriceHistory.Add(new PriceHis() { Time = (DateTime)reader["Time"], Price = (double)reader["Price"] });
             }
             ViewModel.Add(Test);
             Line.Series[0].ItemsSource = ViewModel[0].PriceHistory;
+        }
+
+        static ObservableCollection<PriceHis> PricingThinner(ObservableCollection<PriceHis> Times, TimeSpan Gap) {
+            List<PriceHis> ToBeDeleted = new List<PriceHis>();
+            DateTime last = DateTime.MinValue;
+            for (int i = 0; i < Times.Count; i++) {
+                if (i == 0) {
+                    last = Times[i].Time;
+                    continue;
+                }
+                if ((Times[i].Time - last) < Gap) {
+                    ToBeDeleted.Add(Times[i]);
+                } else {
+                    last = Times[i].Time;
+                }
+            }
+            foreach (PriceHis time in ToBeDeleted) {
+                Times.Remove(time);
+            }
+            return Times;
         }
     }
 }
