@@ -98,6 +98,12 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Admin\AdminMainPage.xaml.cs">
+      <DependentUpon>AdminMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Admin\Pool.xaml.cs">
+      <DependentUpon>Pool.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\User\AdvanceSearch.xaml.cs">
       <DependentUpon>AdvanceSearch.xaml</DependentUpon>
     </Compile>
@@ -201,6 +207,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\Admin\AdminMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Admin\Pool.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\User\AdvanceSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -240,7 +254,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.4.0</Version>
+      <Version>6.0.1</Version>
     </PackageReference>
     <PackageReference Include="Pomelo.Data.MySql">
       <Version>1.0.0</Version>
@@ -252,9 +266,7 @@
       <Version>2.3.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\Admin\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
