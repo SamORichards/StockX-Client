@@ -69,7 +69,7 @@ namespace StockMarketDesktopClient.Pages.User {
 
         private void LoadTrades() {
             TradeList.Items.Clear();
-            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, StockName, BuyerID, Price, Quantity FROM Trades WHERE BuyerID = " + DataBaseHandler.UserID + " OR SellerID = " + DataBaseHandler.UserID);
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT Time, StockName, BuyerID, Price, Quantity FROM Trades WHERE BuyerID = " + DataBaseHandler.UserID + " OR SellerID = " + DataBaseHandler.UserID + " ORDER BY TIME DESC");
             while (reader.Read()) {
                 DateTime Time = (DateTime)reader["Time"];
                 string StockName = (string)reader["StockName"];

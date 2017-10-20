@@ -6,7 +6,7 @@ namespace StockMarketDesktopClient.Scripts {
     class DataBaseHandler {
         public static string Nickname;
         public static int UserID;
-        static string myConnectionString = "server=sammyben.ddns.net;database=StockMarket;uid=Sam;pwd=230999;";
+        static string myConnectionString = "server=localhost;database=StockMarket;uid=Sam;pwd=230999;";
         public static MySqlConnection sqlCon = new MySqlConnection(myConnectionString);
         public static void StartServer() {
             OpenConnection();

@@ -4,13 +4,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using StockMarketDesktopClient.Scripts;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+using Pomelo.Data.MySql;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace StockMarketDesktopClient.Pages {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class FeaturedStock : Page {
         public FeaturedStock() {
             this.InitializeComponent();
@@ -27,6 +25,44 @@ namespace StockMarketDesktopClient.Pages {
                 };
                 Helper.FirstLoad = false;
             }
+            if (DataBaseHandler.GetCount("SELECT SUM(Admin) FROM Users WHERE ID = " + DataBaseHandler.UserID) == 0) {
+                AdminButton.IsEnabled = false;
+                AdminButton.Background = new SolidColorBrush(Colors.White);
+                AdminButton.Content = "";
+            }
+            LoadBiggestRiser();
+            LoadBiggestFallers();
+        }
+
+        private void LoadBiggestRiser() {
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT StockName, CurrentPrice, OpeningPriceToday FROM Stock ORDER BY CurrentPrice - OpeningPriceToday DESC LIMIT 4");
+            while (reader.Read()) {
+                StackPanel panel = new StackPanel();
+                panel.Orientation = Orientation.Horizontal;
+                panel.HorizontalAlignment = HorizontalAlignment.Left;
+                double CurrentPrice = (double)reader["CurrentPrice"];
+                panel.Children.Add(Helper.CreateTextBlock((string)reader["StockName"], TextAlignment.Left, 100, 18));
+                panel.Children.Add(Helper.CreateTextBlock(Math.Round(CurrentPrice, 4).ToString(), TextAlignment.Left, 100, 18));
+                panel.Children.Add(Helper.CreateTextBlock(Math.Round(CurrentPrice - (double)reader["OpeningPriceToday"], 4).ToString(), TextAlignment.Left, 100, 18));
+                BiggestRisers.Items.Add(panel);
+            }
+        }
+        private void LoadBiggestFallers() {
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT StockName, CurrentPrice, OpeningPriceToday FROM Stock ORDER BY CurrentPrice - OpeningPriceToday ASC LIMIT 4");
+            while (reader.Read()) {
+                StackPanel panel = new StackPanel();
+                panel.Orientation = Orientation.Horizontal;
+                panel.HorizontalAlignment = HorizontalAlignment.Left;
+                double CurrentPrice = (double)reader["CurrentPrice"];
+                panel.Children.Add(Helper.CreateTextBlock((string)reader["StockName"], TextAlignment.Left, 100, 18));
+                panel.Children.Add(Helper.CreateTextBlock(Math.Round(CurrentPrice, 4).ToString(), TextAlignment.Left, 100, 18));
+                panel.Children.Add(Helper.CreateTextBlock(Math.Round(CurrentPrice - (double)reader["OpeningPriceToday"], 4).ToString(), TextAlignment.Left, 100, 18));
+                BiggestFallers.Items.Add(panel);
+            }
+        }
+        private void StockTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            string StockName = (((sender as ListView).SelectedItem as StackPanel).Children[0] as TextBlock).Text;
+            this.Frame.Navigate(typeof(Pages.User.StockPage), StockName);
         }
         #region HB Menu
         private void HamburgerButton_Click(object sender, RoutedEventArgs e) {
@@ -57,10 +93,13 @@ namespace StockMarketDesktopClient.Pages {
             this.Frame.Navigate(typeof(Pages.User.AlgoTrading));
         }
 
-        private void SearchClick(object sender, RoutedEventArgs e)
-        {
+        private void SearchClick(object sender, RoutedEventArgs e) {
             this.Frame.Navigate(typeof(Pages.User.SearchResults), new Pages.User.SearchParams(SearchBox.Text, false));
         }
+
+        private void AdminButton_Click(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Pages.Admin.AdminMainPage));
+        }
     }
-#endregion
+    #endregion
 }
