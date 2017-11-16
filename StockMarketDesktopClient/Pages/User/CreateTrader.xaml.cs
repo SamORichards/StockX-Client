@@ -143,7 +143,7 @@ namespace StockMarketDesktopClient.Pages.User {
                     PricesParsable = false;
                 }
             if (PricesParsable) {
-                DataBaseHandler.SetData(string.Format("INSERT INTO UserAlgoTraders (OwnerID, TTarget, TOpperation, TValue, ATarget, ABuyOrSell, AQuantity) VALUES({0}, '{1}', {2}, {3}, '{4}', {5}, {6})", DataBaseHandler.UserID, trader.trigger.Target, (int)trader.trigger.Operator, trader.trigger.Value, trader.action.Target, (int)trader.action.BuyOrSell, trader.action.Quantity));
+                DataBaseHandler.SetData(string.Format("INSERT INTO UserAlgoTraders (OwnerID, TTarget, TOperator, TValue, ATarget, ABuyOrSell, AQuantity) VALUES({0}, '{1}', {2}, {3}, '{4}', {5}, {6})", DataBaseHandler.UserID, trader.trigger.Target, (int)trader.trigger.Operator, trader.trigger.Value, trader.action.Target, (int)trader.action.BuyOrSell, trader.action.Quantity));
                 this.Frame.Navigate(typeof(Pages.User.AlgoTrading));
             }
         }
