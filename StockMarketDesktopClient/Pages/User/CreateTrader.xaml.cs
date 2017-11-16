@@ -28,8 +28,8 @@ namespace StockMarketDesktopClient.Pages.User {
         }
         List<string> StockName = new List<string>();
         class Trader {
-            public List<Trigger> Triggers = new List<Trigger>();
-            public List<Action> Actions = new List<Action>();
+            public Trigger trigger;
+            public Action action;
         }
         class Trigger {
             public string Target;
@@ -48,7 +48,7 @@ namespace StockMarketDesktopClient.Pages.User {
             base.OnNavigatedTo(e);
             MySqlDataReader reader = DataBaseHandler.GetData("SELECT FullName FROM Stock");
             ComboBox box = new ComboBox();
-            trader.Triggers.Add(new Trigger());
+            trader.trigger = new Trigger();
             while (reader.Read()) {
                 box.Items.Add((string)reader["FullName"]);
                 StockName.Add((string)reader["FullName"]);
@@ -63,7 +63,7 @@ namespace StockMarketDesktopClient.Pages.User {
                 panel.Children.RemoveAt(panel.Children.Count - 1);
             }
             panel.Children.Add(Helper.CreateTextBlock(" is", TextAlignment.Left, 0, 22, 10));
-            trader.Triggers[0].Target = (sender as ComboBox).SelectedItem as string;
+            trader.trigger.Target = (sender as ComboBox).SelectedItem as string;
             ComboBox box = new ComboBox();
             box.Items.Add(">");
             box.Items.Add("<");
@@ -76,18 +76,17 @@ namespace StockMarketDesktopClient.Pages.User {
                 panel.Children.RemoveAt(panel.Children.Count - 1);
             }
             if ((sender as ComboBox).SelectedItem as string == ">") {
-                trader.Triggers[0].Operator = MathOperator.Greater;
+                trader.trigger.Operator = MathOperator.Greater;
             } else {
-                trader.Triggers[0].Operator = MathOperator.Less;
+                trader.trigger.Operator = MathOperator.Less;
             }
-            trader.Actions.Clear();
-            trader.Actions.Add(new Action());
+            trader.action = new Action();
             panel.Children.Add(Helper.CreateTextBlock("  $", TextAlignment.Left, 0, 22));
             TextBox priceBox = new TextBox();
             priceBox.PlaceholderText = "Price";
             priceBox.VerticalAlignment = VerticalAlignment.Top;
             panel.Children.Add(priceBox);
-            trader.Triggers[0].box = priceBox;
+            trader.trigger.box = priceBox;
             panel.Children.Add(Helper.CreateTextBlock(" then ", TextAlignment.Left, 0, 22, 10));
             ComboBox box = new ComboBox();
             box.Items.Add("Buy");
@@ -103,7 +102,7 @@ namespace StockMarketDesktopClient.Pages.User {
             TextBox QuantityBox = new TextBox();
             QuantityBox.PlaceholderText = "Quantity";
             QuantityBox.VerticalAlignment = VerticalAlignment.Top;
-            trader.Actions[0].box = QuantityBox;
+            trader.action.box = QuantityBox;
             panel.Children.Add(Helper.CreateTextBlock("", TextAlignment.Left, 0, 22, 10));
             panel.Children.Add(QuantityBox);
             ComboBox box = new ComboBox();
@@ -111,9 +110,9 @@ namespace StockMarketDesktopClient.Pages.User {
                 box.Items.Add(s);
             }
             if ((sender as ComboBox).SelectedItem as string == "Buy") {
-                trader.Actions[0].BuyOrSell = BuySell.Buy;
+                trader.action.BuyOrSell = BuySell.Buy;
             } else {
-                trader.Actions[0].BuyOrSell = BuySell.Sell;
+                trader.action.BuyOrSell = BuySell.Sell;
             }
             box.SelectionChanged += StockName2Changed;
             box.VerticalAlignment = VerticalAlignment.Top;
@@ -125,7 +124,7 @@ namespace StockMarketDesktopClient.Pages.User {
             while (panel.Children.Count > 12) {
                 panel.Children.RemoveAt(panel.Children.Count - 1);
             }
-            trader.Actions[0].Target = (sender as ComboBox).SelectedItem as string;
+            trader.action.Target = (sender as ComboBox).SelectedItem as string;
             Button b = new Button();
             panel.Children.Add(Helper.CreateTextBlock("", TextAlignment.Left, 0, 22, 10));
             b.Content = "Create Trader";
@@ -137,26 +136,14 @@ namespace StockMarketDesktopClient.Pages.User {
 
         private void CreateTraderClicked(object sender, RoutedEventArgs e) {
             bool PricesParsable = true;
-            foreach (Trigger t in trader.Triggers) {
-                if (!double.TryParse(t.box.Text, out t.Value)) {
+                if (!double.TryParse(trader.trigger.box.Text, out trader.trigger.Value)) {
                     PricesParsable = false;
                 }
-            }
-            foreach (Action a in trader.Actions) {
-                if (!int.TryParse(a.box.Text, out a.Quantity)) {
+                if (!int.TryParse(trader.action.box.Text, out trader.action.Quantity)) {
                     PricesParsable = false;
                 }
-            }
             if (PricesParsable) {
-                string Command = "";
-                foreach (Trigger t in trader.Triggers) {
-                    Command += t.Target + "|" + (int)t.Operator + "|" + t.Value + "*";
-                }
-                Command += "#";
-                foreach (Action a in trader.Actions) {
-                    Command += a.Target + "|" + (int)a.BuyOrSell + "|" + a.Quantity + "*";
-                }
-                DataBaseHandler.SetData("INSERT INTO UserAlgoTraders(OwnerID, Command) VALUES(" + DataBaseHandler.UserID + ", '" + Command + "')");
+                DataBaseHandler.SetData(string.Format("INSERT INTO UserAlgoTraders (OwnerID, TTarget, TOpperation, TValue, ATarget, ABuyOrSell, AQuantity) VALUES({0}, '{1}', {2}, {3}, '{4}', {5}, {6})", DataBaseHandler.UserID, trader.trigger.Target, (int)trader.trigger.Operator, trader.trigger.Value, trader.action.Target, (int)trader.action.BuyOrSell, trader.action.Quantity));
                 this.Frame.Navigate(typeof(Pages.User.AlgoTrading));
             }
         }

@@ -43,7 +43,7 @@
                                 <TextBlock Text="Name"  FontSize="20" Width="350" TextAlignment="Left"></TextBlock>
                                 <TextBlock Text="Price"  FontSize="20" Width="150" TextAlignment="Left"></TextBlock>
                                 <TextBlock Padding="150,0,0,0"></TextBlock>
-                                <Button Content="Create" Click="CreateButtonClick"></Button>
+                                <Button Content="Create" Click="CreateButtonClick" Style="{StaticResource ButtonStyle1}" Background="DeepSkyBlue" Foreground="White"></Button>
                             </StackPanel>
                         </ListView.Header>
                     </ListView>

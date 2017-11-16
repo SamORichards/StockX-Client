@@ -40,7 +40,7 @@
                         <RowDefinition Height="5*"/>
                         <RowDefinition Height="19*"/>
                     </Grid.RowDefinitions>
-                    <Button Name="AdminButton" Content="Admin" FontSize="30" Margin="40, 0, 0 ,0" Click="AdminButton_Click"></Button>
+                    <Button Name="AdminButton" Content="Admin" FontSize="30" Margin="40, 0, 0 ,0" Click="AdminButton_Click" Style="{StaticResource ButtonStyle1}" Background="DeepSkyBlue" Foreground="White"></Button>
                     <TextBlock Text="Featured Stock" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="0,10,0,0" FontSize="70" Margin="386,0"></TextBlock>
                     <RelativePanel HorizontalAlignment="Right" VerticalAlignment="Top" Padding="50,50,50,50" Grid.RowSpan="2">
                         <TextBox Background="LightGray" Foreground="White"  FontSize="25" PlaceholderText="Search" Name="SearchBox" HorizontalAlignment="Right" VerticalAlignment="Top"  Padding="100,5,100,5"></TextBox>

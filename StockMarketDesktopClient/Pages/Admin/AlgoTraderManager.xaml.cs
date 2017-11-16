@@ -82,6 +82,7 @@ namespace StockMarketDesktopClient.Pages.Admin {
 
         void DeleteStockButtonClick(int ID) {
             DataBaseHandler.SetData("DELETE FROM AlgoTrader WHERE ID = " + ID);
+            this.Frame.Navigate(typeof(Pages.Admin.AlgoTraderManager));
         }
 
         private void CreateButtonClicked(object sender, RoutedEventArgs e) {

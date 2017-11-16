@@ -36,7 +36,7 @@
             </SplitView.Pane>
             <SplitView.Content>
                 <StackPanel>
-                    <Button Content="Create" HorizontalAlignment="Right" Margin="0,25, 25,0" Click="CreateButtonClicked"></Button>
+                    <Button Content="Create" HorizontalAlignment="Right" Margin="0,25, 25,0" Click="CreateButtonClicked" Style="{StaticResource ButtonStyle1}" Background="DeepSkyBlue" Foreground="White" FontSize="30"></Button>
                     <ListView Name="SearchResultList" Padding="50" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <ListView.Header>
                             <StackPanel Orientation="Horizontal">
