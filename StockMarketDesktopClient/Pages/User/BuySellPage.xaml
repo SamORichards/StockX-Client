@@ -15,7 +15,6 @@
             <TextBox PlaceholderText="Quantity" Name="QuantityBox" Padding="75,25,75,25" FontSize="22"></TextBox>
             <TextBlock Padding="0,0,0,20"></TextBlock>
             <Button Name="BuySellButton" Click="BuySellButtonClicked" Content="Buy" Padding="100,25,100,25" Background="Green" HorizontalAlignment="Center" FontSize="32"></Button>
-
         </StackPanel>
     </Grid>
 </Page>

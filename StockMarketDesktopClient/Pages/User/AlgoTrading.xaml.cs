@@ -36,14 +36,14 @@ namespace StockMarketDesktopClient.Pages.User {
 
         void LoadTraders() {
             TradersList.Items.Clear();
-            MySqlDataReader reader = DataBaseHandler.GetData("SELECT * FROM AlgoTraders WHERE OwnerID = " + DataBaseHandler.UserID);
+            MySqlDataReader reader = DataBaseHandler.GetData("SELECT * FROM UserAlgoTraders WHERE OwnerID = " + DataBaseHandler.UserID);
             while (reader.Read()) {
                 StackPanel panel = new StackPanel();
                 panel.Orientation = Orientation.Horizontal;
                 panel.Children.Add(Helper.CreateTextBlock(((int)reader["ID"]).ToString(), TextAlignment.Left, 25, 22));
                 Button b = new Button();
                 b.Content = "Remove";
-                b.Click += (s, ev) => { DataBaseHandler.SetData("DELETE FROM AlgoTraders WHERE ID = " + reader["ID"]); LoadTraders(); };
+                b.Click += (s, ev) => { DataBaseHandler.SetData("DELETE FROM UserAlgoTraders WHERE ID = " + reader["ID"]); LoadTraders(); };
                 panel.Children.Add(b);
                 TradersList.Items.Add(panel);
             }

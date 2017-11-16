@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using StockMarketDesktopClient.Scripts;
 using Pomelo.Data.MySql;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -52,8 +53,8 @@ namespace StockMarketDesktopClient.Pages.User {
                 FundsAvailableBlock.Text = "Funds Available: " + Math.Round(FundsAvailable, 2);
             }
         }
-
-        private void BuySellButtonClicked(object sender, RoutedEventArgs e) {
+            
+        private async void BuySellButtonClicked(object sender, RoutedEventArgs e) {
             int Quantity;
             if (int.TryParse(QuantityBox.Text, out Quantity)) {
                 double Price = DataBaseHandler.GetCountDouble("SELECT SUM(CurrentPrice) FROM Stock WHERE StockName = '" + StockName + "'");
@@ -68,6 +69,7 @@ namespace StockMarketDesktopClient.Pages.User {
                         double FundsAvailable = Balance - MoneyInPool;
                         int CanAfford = (int)(FundsAvailable / Price);
                         if (Quantity > CanAfford) { Quantity = CanAfford; };
+                        QuantityBox.Text = Quantity.ToString();
                         DataBaseHandler.SetData(string.Format("INSERT INTO Pool (Type, Price, User, StockName, Quantity) VALUES ({0}, {1}, {2}, '{3}', {4})", (int)bidOffer, Math.Round(Price, 2), DataBaseHandler.UserID, StockName, Quantity));
                         this.Frame.Navigate(typeof(Pages.User.Portfolio));
                         break;
@@ -76,14 +78,15 @@ namespace StockMarketDesktopClient.Pages.User {
                         int AlreadySelling = DataBaseHandler.GetCount("SELECT SUM(Quantity) FROM Pool WHERE Type = 1 AND User = " + DataBaseHandler.UserID + " AND StockName = '" + StockName + "'");
                         int CanSell = QuantityOwned - AlreadySelling;
                         if (Quantity > CanSell) { Quantity = CanSell; }
+                        QuantityBox.Text = Quantity.ToString();
                         DataBaseHandler.SetData(string.Format("INSERT INTO Pool (Type, Price, User, StockName, Quantity) VALUES ({0}, {1}, {2}, '{3}', {4})", (int)bidOffer, Math.Round(Price, 2), DataBaseHandler.UserID, StockName, Quantity));
                         this.Frame.Navigate(typeof(Pages.User.Portfolio));
                         break;
                 }
             } else {
-                //TODO: Warning Box
-
-
+                MessageDialog message = new MessageDialog("Quantity is not valid");
+                await message.ShowAsync();
+                return;
             }
         }
     }

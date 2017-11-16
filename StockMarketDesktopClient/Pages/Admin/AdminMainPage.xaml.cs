@@ -29,6 +29,18 @@ namespace StockMarketDesktopClient.Pages.Admin {
         private void PoolClick(object sender, RoutedEventArgs e) {
             this.Frame.Navigate(typeof(Pages.Admin.Pool));
         }
+
+        private void PersonalTradingClick(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Pages.FeaturedStock));
+        }
+
+        private void StockClick(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Pages.Admin.StockListPage));
+        }
+
+        private void AlgoClick(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(Pages.Admin.AlgoTraderManager));
+        }
         #endregion
         public AdminMainPage() {
             this.InitializeComponent();

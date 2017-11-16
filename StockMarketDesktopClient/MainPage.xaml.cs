@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using StockMarketDesktopClient.Scripts;
 using Pomelo.Data.MySql;
 using Windows.UI;
+using Windows.UI.Popups;
 
 namespace StockMarketDesktopClient {
     /// <summary>
@@ -25,11 +26,38 @@ namespace StockMarketDesktopClient {
             this.InitializeComponent();
         }
 
-        private void LoginButtonClick(object sender, RoutedEventArgs e) {
+        private async void LoginButtonClick(object sender, RoutedEventArgs e) {
             DataBaseHandler.UserID = 1;
-            if (ValidEmail(EmailBox.Text) && ValidUsernamePassword(PasswordBox.Password)) {
-                OnlineConnector("Login", "", PasswordBox.Password, EmailBox.Text);
+            if (!(ValidEmail(EmailBox.Text))) {
+                MessageDialog message = new MessageDialog("Email is not valid");
+                await message.ShowAsync();
+                return;
             }
+            if (!(ValidUsernamePassword(PasswordBox.Password))) {
+                MessageDialog message = new MessageDialog("Password is not valid");
+                await message.ShowAsync();
+                return;
+            }
+            OnlineConnector("Login", "", PasswordBox.Password, EmailBox.Text);
+        }
+
+        private async void CompleteRegistrationClick(object sender, RoutedEventArgs e) {
+            if (!(ValidEmail(EmailBox.Text))) {
+                MessageDialog message = new MessageDialog("Email is not valid");
+                await message.ShowAsync();
+                return;
+            }
+            if (!(ValidUsernamePassword(PasswordBox.Password))) {
+                MessageDialog message = new MessageDialog("Password is not valid");
+                await message.ShowAsync();
+                return;
+            }
+            if (!(ValidUsernamePassword((StackList.Children[0] as TextBox).Text))) {
+                MessageDialog message = new MessageDialog("Username is not valid");
+                await message.ShowAsync();
+                return;
+            }
+            OnlineConnector("Registration", (StackList.Children[0] as TextBox).Text, PasswordBox.Password, EmailBox.Text);
         }
 
         bool ValidUsernamePassword(string user) {
@@ -73,7 +101,7 @@ namespace StockMarketDesktopClient {
             return false;
         }
 
-        void OnlineConnector(string Act, string formNick, string formPassword, string email) {
+        async void OnlineConnector(string Act, string formNick, string formPassword, string email) {
             if (Act == "Login") {
                 MySqlDataReader reader = DataBaseHandler.GetData("SELECT * FROM Users WHERE Email = '" + email + "'");
                 string Nickname = "";
@@ -89,22 +117,23 @@ namespace StockMarketDesktopClient {
                         DataBaseHandler.Nickname = Nickname;
                         DataBaseHandler.UserID = UserId;
                         this.Frame.Navigate(typeof(Pages.FeaturedStock));
+                    } else {
+                        MessageDialog Message = new MessageDialog("The Password is incorrect");
+                        await Message.ShowAsync();
+                        return;
                     }
                 }
             } else {
-                MySqlDataReader reader = DataBaseHandler.GetData("SELECT ID FROM Users WHERE Email = '" + email + "'");
-                int UserId = -1;
-                while (reader.Read()) {
-                    UserId = (int)reader["ID"];
-                }
-                if (UserId == -1) {
-                    DataBaseHandler.SetData(string.Format("INSERT INTO Users(Nickname, Email, Password) VALUES('{0}', '{1}', '{2}')", formNick, email, formPassword));
-                    UserId = DataBaseHandler.GetCount("SELECT SUM(ID) FROM Users WHERE Email = '" + email + "'");
-                    DataBaseHandler.UserID = UserId;
+                int taken = DataBaseHandler.GetCount("SELECT COUNT(ID) FROM Users WHERE Email = '" + email + "'");
+                if (taken == 0) {
+                    DataBaseHandler.UserID = DataBaseHandler.GetCount(string.Format("INSERT INTO Users(Nickname, Email, Password) VALUES('{0}', '{1}', '{2}'); SELECT LAST_INSERT_ID();", formNick, email, formPassword));
                     this.Frame.Navigate(typeof(Pages.FeaturedStock));
+                } else {
+                    MessageDialog Message = new MessageDialog("The Email is already taken");
+                    await Message.ShowAsync();
+                    return;
                 }
             }
-
         }
 
         private void RegisteredButtonClick(object sender, RoutedEventArgs e) {
@@ -120,13 +149,7 @@ namespace StockMarketDesktopClient {
             box.Name = "NicknameField";
             RegistrationButton.Click -= RegisteredButtonClick;
             RegistrationButton.Click += CompleteRegistrationClick;
-            StackList.Children.Insert(0,box);
-        }
-
-        private void CompleteRegistrationClick(object sender, RoutedEventArgs e) {
-            if (ValidEmail(EmailBox.Text) && ValidUsernamePassword(PasswordBox.Password) && ValidUsernamePassword((StackList.Children[0] as TextBox).Text)) {
-                OnlineConnector("Registration", (StackList.Children[0] as TextBox).Text, PasswordBox.Password, EmailBox.Text);
-            }
+            StackList.Children.Insert(0, box);
         }
     }
 }

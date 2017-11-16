@@ -156,7 +156,7 @@ namespace StockMarketDesktopClient.Pages.User {
                 foreach (Action a in trader.Actions) {
                     Command += a.Target + "|" + (int)a.BuyOrSell + "|" + a.Quantity + "*";
                 }
-                DataBaseHandler.SetData("INSERT INTO AlgoTraders(OwnerID, Command) VALUES(" + DataBaseHandler.UserID + ", '" + Command + "')");
+                DataBaseHandler.SetData("INSERT INTO UserAlgoTraders(OwnerID, Command) VALUES(" + DataBaseHandler.UserID + ", '" + Command + "')");
                 this.Frame.Navigate(typeof(Pages.User.AlgoTrading));
             }
         }

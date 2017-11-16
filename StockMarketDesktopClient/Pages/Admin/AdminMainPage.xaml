@@ -12,14 +12,25 @@
             <SplitView.Pane>
                 <StackPanel Background="DeepSkyBlue">
                     <Button x:Name="HamburgerButton" Foreground="White" HorizontalAlignment="Left" FontFamily="Segoe MDL2 Assets" FontSize="30" Content="" Background="{x:Null}" Click="HamburgerButton_Click"/>
-
                     <StackPanel Orientation="Horizontal" Padding="0, 5 , 0 , 5">
+                        <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="PersonalTradingClick"></Button>
+                        <Button Content="Personal Trading" Foreground="White"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="PersonalTradingClick"></Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="MainMenuClick"></Button>
                         <Button Content="Home Page" Foreground="White"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="MainMenuClick"></Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="PoolClick"></Button>
                         <Button Content="Pool"  Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="PoolClick"></Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="StockClick"></Button>
+                        <Button Content="Stocks"  Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="StockClick"></Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Background="{x:Null}" Foreground="White" Content="" FontFamily="Segoe MDL2 Assets" FontSize="30" Click="AlgoClick"></Button>
+                        <Button Content="Algo Traders"  Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" Background="{x:Null}" Click="AlgoClick"></Button>
                     </StackPanel>
                 </StackPanel>
             </SplitView.Pane>

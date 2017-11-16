@@ -98,6 +98,18 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Admin\AlgoTraderCreatorPage.xaml.cs">
+      <DependentUpon>AlgoTraderCreatorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Admin\StockEditorPage.xaml.cs">
+      <DependentUpon>StockEditorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Admin\StockListPage.xaml.cs">
+      <DependentUpon>StockListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Admin\AlgoTraderManager.xaml.cs">
+      <DependentUpon>AlgoTraderManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Admin\AdminMainPage.xaml.cs">
       <DependentUpon>AdminMainPage.xaml</DependentUpon>
     </Compile>
@@ -204,6 +216,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Admin\AlgoTraderCreatorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Admin\StockEditorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Admin\StockListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Admin\AlgoTraderManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
