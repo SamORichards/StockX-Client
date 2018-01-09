@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="StockMarketDesktopClient.Pages.Admin.AdminMainPage">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIAAAQAAAAAAAAAAAAAAAAAAAEAAAAwAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\Admin\AdminMainPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.Admin.AlgoTraderCreatorPage">
+    <Position X="2.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\Admin\AlgoTraderCreatorPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.Admin.AlgoTraderManager">
+    <Position X="5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIAAAQAAAAAAACAAAAAAAAAAAMAAAAwAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\Admin\AlgoTraderManager.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.Admin.Pool">
+    <Position X="7.25" Y="0.5" Width="2" />
+    <NestedTypes>
+      <Class Name="StockMarketDesktopClient.Pages.Admin.Pool.PieChartData" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Pages\Admin\Pool.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AIAAAQAAAACAAAAAAAAAAAAAAEAAAAwAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\Admin\Pool.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.Admin.StockEditorPage">
+    <Position X="9.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAACAAAAAAAAQAAIAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\Admin\StockEditorPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.Admin.StockListPage">
+    <Position X="11.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIAAAYAAAAAAAAAAAAAAAAAAAMAAAAwAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\Admin\StockListPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.User.AdvanceSearch">
+    <Position X="0.5" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAQAAAAAAABAAAAAAQAAAAAAAQAACJAAAAAAAA=</HashCode>
+      <FileName>Pages\User\AdvanceSearch.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.User.AlgoTrading" BaseTypeListCollapsed="true">
+    <Position X="3" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BAAgAAAAAAAAAAABAAAAAAQAAAAAAAQAACJAAIAAAAA=</HashCode>
+      <FileName>Pages\User\AlgoTrading.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.User.BuySellPage">
+    <Position X="5.5" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAACAAACAAAAAAg=</HashCode>
+      <FileName>Pages\User\BuySellPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.User.CreateTrader">
+    <Position X="7.5" Y="4.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="StockMarketDesktopClient.Pages.User.CreateTrader.Trader">
+        <TypeIdentifier>
+          <NewMemberFileName>Pages\User\CreateTrader.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="StockMarketDesktopClient.Pages.User.CreateTrader.Trigger">
+        <TypeIdentifier>
+          <NewMemberFileName>Pages\User\CreateTrader.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="StockMarketDesktopClient.Pages.User.CreateTrader.Action">
+        <TypeIdentifier>
+          <NewMemberFileName>Pages\User\CreateTrader.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>IEAAAAAAAAAACAABAAIAAAQAAgAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\User\CreateTrader.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.FeaturedStock">
+    <Position X="9.5" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAUABAAAAAAQAAAAAAAQAACJCAAAAgAA=</HashCode>
+      <FileName>Pages\User\FeaturedStock.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.User.Portfolio">
+    <Position X="12" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BAAAIAAEAAAABAABAAAAAAQABAAAAAUABiJAAAAAAAA=</HashCode>
+      <FileName>Pages\User\Portfolio.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.User.SearchParams">
+    <Position X="14.5" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Pages\User\SearchResults.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.User.SearchResults">
+    <Position X="14.5" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAAgAAA=</HashCode>
+      <FileName>Pages\User\SearchResults.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.User.PriceHis">
+    <Position X="16.5" Y="11.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Pages\User\StockPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.User.StockPage">
+    <Position X="16.5" Y="4.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="StockMarketDesktopClient.Pages.User.StockPage.PriceChartList">
+        <TypeIdentifier>
+          <NewMemberFileName>Pages\User\StockPage.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABAIIAAIAAAAAAABAAABAAQAEAAAABECAEAQEAAABAA=</HashCode>
+      <FileName>Pages\User\StockPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Pages.User.WatchList">
+    <Position X="18.5" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAABAAAAAAQAAAAAABQAACJBAAAAAAA=</HashCode>
+      <FileName>Pages\User\WatchList.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StockMarketDesktopClient.Scripts.DataBaseHandler">
+    <Position X="0.5" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQBCAABEAAAAAAgAACAAAgAAQAIAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Scripts\DataBaseHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StockMarketDesktopClient.Scripts.Helper">
+    <Position X="2.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripts\Helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="StockMarketDesktopClient.Pages.User.MathOperator">
+    <Position X="3" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQAAAAAAAAA=</HashCode>
+      <FileName>Pages\User\AlgoTrading.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StockMarketDesktopClient.Pages.User.BuySell">
+    <Position X="3" Y="7.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\User\AlgoTrading.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StockMarketDesktopClient.Pages.User.BidOffer">
+    <Position X="5.5" Y="6.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\User\BuySellPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StockMarketDesktopClient.Pages.User.ScreenState">
+    <Position X="12" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAgAA=</HashCode>
+      <FileName>Pages\User\Portfolio.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="2b44c3ac-5116-4b42-8d42-14ee54ce00ac" Publisher="CN=sammy" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="2b44c3ac-5116-4b42-8d42-14ee54ce00ac" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="36869LemonJuiceStudios.SimX" Publisher="CN=48E6FF11-2BB7-4C74-8CB0-EEBE642540A2" Version="1.1.0.0" />
+  <mp:PhoneIdentity PhoneProductId="7b3d9314-7b74-454b-9746-1adff93af757" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>StockMarketDesktopClient</DisplayName>
-    <PublisherDisplayName>sammy</PublisherDisplayName>
+    <DisplayName>SimX</DisplayName>
+    <PublisherDisplayName>Lemon Juice Studios</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="StockMarketDesktopClient.App">
-      <uap:VisualElements DisplayName="StockMarketDesktopClient" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="StockMarketDesktopClient" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="SimX" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="SimX Desktop Client" BackgroundColor="transparent">
         <uap:LockScreen Notification="badge" BadgeLogo="Assets\BadgeLogo.png" />
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
         </uap:DefaultTile>
