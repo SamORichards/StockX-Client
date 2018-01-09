@@ -16,6 +16,8 @@ using StockMarketDesktopClient.Scripts;
 using Pomelo.Data.MySql;
 using Windows.UI;
 using Windows.UI.Popups;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace StockMarketDesktopClient {
     /// <summary>
@@ -101,7 +103,32 @@ namespace StockMarketDesktopClient {
             return false;
         }
 
+        public string CalculateMD5Hash(string input) {
+
+            // step 1, calculate MD5 hash from input
+
+            MD5 md5 = MD5.Create();
+
+            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
+
+            byte[] hash = md5.ComputeHash(inputBytes);
+
+            // step 2, convert byte array to hex string
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < hash.Length; i++) {
+
+                sb.Append(hash[i].ToString());
+
+            }
+
+            return sb.ToString();
+        }
+
+
         async void OnlineConnector(string Act, string formNick, string formPassword, string email) {
+            formPassword = CalculateMD5Hash(formPassword);
             if (Act == "Login") {
                 MySqlDataReader reader = DataBaseHandler.GetData("SELECT * FROM Users WHERE Email = '" + email + "'");
                 string Nickname = "";
