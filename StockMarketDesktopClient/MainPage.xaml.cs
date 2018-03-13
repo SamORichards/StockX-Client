@@ -28,7 +28,11 @@ namespace StockMarketDesktopClient {
             this.InitializeComponent();
         }
 
-        private async void LoginButtonClick(object sender, RoutedEventArgs e) {
+
+		//Runs after the login button is pressed
+		//This grabs text from the input fields and makes sure they are valid
+		//It so it then passes them on to the OnlineConnector method
+		private async void LoginButtonClick(object sender, RoutedEventArgs e) {
             DataBaseHandler.UserID = 1;
             if (!(ValidEmail(EmailBox.Text))) {
                 MessageDialog message = new MessageDialog("Email is not valid");
@@ -43,6 +47,9 @@ namespace StockMarketDesktopClient {
             OnlineConnector("Login", "", PasswordBox.Password, EmailBox.Text);
         }
 
+		//Runs after the Registration button is pressed for the second time
+		//This grabs text from the input fields and makes sure they are valid
+		//It so it then passes them on to the OnlineConnector method
         private async void CompleteRegistrationClick(object sender, RoutedEventArgs e) {
             if (!(ValidEmail(EmailBox.Text))) {
                 MessageDialog message = new MessageDialog("Email is not valid");
@@ -62,6 +69,7 @@ namespace StockMarketDesktopClient {
             OnlineConnector("Registration", (StackList.Children[0] as TextBox).Text, PasswordBox.Password, EmailBox.Text);
         }
 
+		//Make sure the password in not empty and only contains letters and numbers
         bool ValidUsernamePassword(string user) {
             bool isValid = true;
             if (string.IsNullOrEmpty(user)) {
@@ -75,6 +83,7 @@ namespace StockMarketDesktopClient {
             return isValid;
         }
 
+		//Check that the email string contains an @ and a . after it
         bool ValidEmail(string email) {
             bool hasAt = false;
             bool hasDotAtEnd = false;
@@ -103,6 +112,8 @@ namespace StockMarketDesktopClient {
             return false;
         }
 
+		//This method for Calculating MD5 hash has been coppied from stack overflow
+		//It is used so that the unencripted password is not sent of the network or store in DB
         public string CalculateMD5Hash(string input) {
 
             // step 1, calculate MD5 hash from input
@@ -126,10 +137,12 @@ namespace StockMarketDesktopClient {
             return sb.ToString();
         }
 
-
+		//Send the information to the database to see if the user can be loged in / registier
         async void OnlineConnector(string Act, string formNick, string formPassword, string email) {
+			//Turn password into a MD5 hash so that the password is not being 
             formPassword = CalculateMD5Hash(formPassword);
             if (Act == "Login") {
+				//Search for account on DB
                 MySqlDataReader reader = DataBaseHandler.GetData("SELECT * FROM Users WHERE Email = '" + email + "'");
                 string Nickname = "";
                 int UserId = -1;
@@ -139,23 +152,31 @@ namespace StockMarketDesktopClient {
                     UserId = (int)reader["ID"];
                     Password = (string)reader["Password"];
                 }
+				//If user has been found UserID will be greater or equal to 0
                 if (UserId >= 0) {
                     if (Password == formPassword) {
                         DataBaseHandler.Nickname = Nickname;
+						//Store UserID for future commands to DB
                         DataBaseHandler.UserID = UserId;
+						//Navigate to the main page of the app
                         this.Frame.Navigate(typeof(Pages.FeaturedStock));
                     } else {
+						//Display error message to user
                         MessageDialog Message = new MessageDialog("The Password is incorrect");
                         await Message.ShowAsync();
                         return;
                     }
                 }
             } else {
+				//Check if this email is taken
                 int taken = DataBaseHandler.GetCount("SELECT COUNT(ID) FROM Users WHERE Email = '" + email + "'");
                 if (taken == 0) {
+					//Insert user data into the DB
                     DataBaseHandler.UserID = DataBaseHandler.GetCount(string.Format("INSERT INTO Users(Nickname, Email, Password) VALUES('{0}', '{1}', '{2}'); SELECT LAST_INSERT_ID();", formNick, email, formPassword));
-                    this.Frame.Navigate(typeof(Pages.FeaturedStock));
+					//Navigate to the main page of the app
+					this.Frame.Navigate(typeof(Pages.FeaturedStock));
                 } else {
+					//Display error message to the user
                     MessageDialog Message = new MessageDialog("The Email is already taken");
                     await Message.ShowAsync();
                     return;
@@ -163,7 +184,9 @@ namespace StockMarketDesktopClient {
             }
         }
 
+		//Called when the registeration button to click
         private void RegisteredButtonClick(object sender, RoutedEventArgs e) {
+			//set up the new buttons to need to display 
             Buttons.Children.Remove(LoginButton);
             TextBox box = new TextBox();
             box.PlaceholderText = "Nickname";
@@ -174,6 +197,7 @@ namespace StockMarketDesktopClient {
             text.FontSize = 45;
             box.Header = text;
             box.Name = "NicknameField";
+			//change the registration button click event to be the complettion event when the data is sent to DB
             RegistrationButton.Click -= RegisteredButtonClick;
             RegistrationButton.Click += CompleteRegistrationClick;
             StackList.Children.Insert(0, box);

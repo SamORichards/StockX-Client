@@ -21,8 +21,8 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>99D5514FD11795527E84E26BCB9550916BDDE10E</PackageCertificateThumbprint>
-    <AppxPackageDir>C:\Users\sammy\Documents\SimX\</AppxPackageDir>
+    <PackageCertificateThumbprint>9620BA017B54276BEA80A28D8BB0EEE6136E8B8E</PackageCertificateThumbprint>
+    <AppxPackageDir>C:\Users\Sam%27s Laptop\Documents\SimXDesktop\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -215,7 +215,6 @@
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
